@@ -1,0 +1,248 @@
+// ======================================================================
+// TRANG CHECK THẺ (check-card.html) — bản giao diện
+// ======================================================================
+@use "../abstracts" as *;
+
+.notice {
+  @include glass-subtle;
+  align-self: flex-start;
+  border-radius: $radius;
+  padding: 0.5rem 0.75rem;
+  @include font($fs-xs);
+  color: $yellow-200;
+}
+
+.check-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.check-panel {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+// Tiêu đề bước: "01 Tải ảnh thẻ"
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: $white;
+
+  &__no {
+    @include mono;
+    color: $cyan-300;
+  }
+
+  small {
+    @include font($fs-xs);
+    font-weight: 400;
+    color: $gray-500;
+  }
+
+  &--divided {
+    border-top: 1px solid $line-strong;
+    padding-top: 1.25rem;
+  }
+}
+
+// Vùng bấm để chọn ảnh
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  border: 2px dashed rgba($cyan-400, 0.3);
+  border-radius: $radius-xl;
+  background: rgba($cyan-400, 0.03);
+  cursor: pointer;
+  transition: border-color $ease;
+
+  &:hover {
+    border-color: rgba($cyan-400, 0.7);
+  }
+
+  &__title {
+    color: $white;
+    font-weight: 600;
+  }
+
+  &__hint {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+.manual-search {
+  border-top: 1px solid $line-strong;
+  padding-top: 1.25rem;
+
+  h3 {
+    @include font($fs-sm);
+    font-weight: 600;
+    color: $white;
+    margin-bottom: 0.5rem;
+  }
+
+  form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .input {
+    flex: 1;
+    padding-block: 0.625rem;
+  }
+
+  button {
+    padding-inline: 1rem;
+    @include font($fs-sm);
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid $line-strong;
+    border-radius: $radius;
+    transition: all $ease;
+
+    &:hover {
+      background: $cyan-400;
+      color: #000;
+    }
+  }
+}
+
+// Thẻ đọc được (ví dụ)
+.match {
+  display: flex;
+  gap: 1rem;
+
+  img {
+    width: 7rem;
+    border-radius: $radius;
+
+    @include up(sm) {
+      width: 8rem;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    @include font($fs-sm);
+  }
+
+  &__read {
+    @include mono;
+    @include font($fs-xs);
+    color: $purple-300;
+  }
+
+  &__name {
+    @include font($fs-lg);
+    color: $white;
+    font-weight: 700;
+  }
+
+  fieldset {
+    margin-top: 0.25rem;
+  }
+
+  legend {
+    @include font($fs-xs);
+    color: $gray-400;
+    margin-bottom: 0.25rem;
+  }
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $gray-200;
+  }
+
+  &__hint {
+    @include font($fs-xs);
+    color: $gray-500;
+
+    a {
+      color: $cyan-300;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Hai ô giá
+.price-pair {
+  display: grid;
+  gap: 1rem;
+
+  @include up(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.price-tile {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid $line-strong;
+  border-radius: $radius-lg;
+  padding: 1rem;
+
+  &__label {
+    @include font($fs-xs);
+    color: $gray-400;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    @include mono;
+    @include font($fs-2xl);
+    font-weight: 900;
+    color: $cyan-300;
+    margin-top: 0.25rem;
+  }
+
+  &__sub {
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-500;
+    margin-top: 0.25rem;
+  }
+
+  table {
+    width: 100%;
+    @include font($fs-sm);
+    margin-top: 0.25rem;
+    @include mono;
+    color: $gray-300;
+  }
+
+  td + td {
+    text-align: right;
+  }
+}
+
+.check-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.small-print {
+  @include font($fs-xs);
+  color: $gray-500;
+}

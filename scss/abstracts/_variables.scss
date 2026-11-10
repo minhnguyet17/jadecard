@@ -1,0 +1,85 @@
+// ======================================================================
+// BIẾN DÙNG CHUNG: màu, font, cỡ chữ, khoảng cách, bo góc, điểm ngắt màn hình
+// Đổi màu hay font ở đây là cả website đổi theo.
+// ======================================================================
+
+// ---------- Màu nền ----------
+$bg: #07070b; // nền chính (gần đen)
+$surface: #101018; // nền khối, ô nhập
+$surface-high: #1b1b28;
+
+// ---------- Màu chữ ----------
+$text: #e4e1e8; // chữ thường
+$white: #fff;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af; // chữ phụ
+$gray-500: #6b7280; // chữ mờ, chú thích
+$gray-600: #4b5563;
+$gray-700: #374151;
+
+// ---------- Màu nhấn (bảng màu holo của thẻ foil) ----------
+$brand: #00e5ff;
+$cyan-200: #a5f3fc;
+$cyan-300: #67e8f9;
+$cyan-400: #22d3ee;
+$cyan-500: #06b6d4;
+$cyan-600: #0891b2;
+$purple-300: #d8b4fe;
+$purple-500: #a855f7;
+$purple-600: #9333ea;
+$pink-500: #ec4899;
+$yellow-200: #fef08a;
+$yellow-300: #fde047;
+$yellow-400: #facc15;
+$emerald-300: #6ee7b7;
+$emerald-400: #34d399;
+$orange-300: #fdba74;
+$orange-400: #fb923c;
+$red-300: #fca5a5;
+$red-500: #ef4444;
+$red-950: #450a0a;
+
+// ---------- Viền mờ trên nền tối ----------
+$line: rgba(255, 255, 255, 0.06); // đường kẻ chia khu vực
+$line-strong: rgba(255, 255, 255, 0.1); // viền ô nhập, nút phụ
+
+// ---------- Font ----------
+$font-sans: "Be Vietnam Pro", sans-serif;
+$font-mono: "JetBrains Mono", monospace;
+$font-icon: "Material Symbols Outlined";
+
+// ---------- Cỡ chữ: (cỡ, chiều cao dòng) ----------
+$fs-xs: (0.75rem, 1rem);
+$fs-sm: (0.875rem, 1.25rem);
+$fs-base: (1rem, 1.5rem);
+$fs-lg: (1.125rem, 1.75rem);
+$fs-xl: (1.25rem, 1.75rem);
+$fs-2xl: (1.5rem, 2rem);
+$fs-3xl: (1.875rem, 2.25rem);
+$fs-4xl: (2.25rem, 2.5rem);
+$fs-5xl: (3rem, 1);
+
+// ---------- Bo góc ----------
+$radius-sm: 0.25rem;
+$radius: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-full: 9999px;
+
+// ---------- Bố cục ----------
+$container: 80rem; // độ rộng tối đa của nội dung (1280px)
+$header-h: 4rem;
+
+// ---------- Điểm ngắt màn hình (mobile-first: viết cho điện thoại trước) ----------
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+);
+
+// ---------- Hiệu ứng ----------
+$ease: 0.15s ease;
+$glow-cyan: 0 0 25px rgba(0, 229, 255, 0.5);
+$glow-cyan-strong: 0 0 35px rgba(0, 229, 255, 0.8);

@@ -1,0 +1,371 @@
+// ======================================================================
+// ĐẶT HÀNG (F05), ĐƠN CỦA TÔI (F07, F56), QUẢN TRỊ ĐƠN (F20),
+// KIỂM ĐỊNH KÝ GỬI (F44, F49), KIỂM DUYỆT (F42)
+// ======================================================================
+@use "../abstracts" as *;
+
+// ---------- Form đặt hàng trong khung Tóm tắt của giỏ hàng ----------
+.summary__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.summary__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+
+  .field__input {
+    @include font($fs-sm);
+    padding: 0.625rem 0.75rem;
+  }
+}
+
+.summary__address {
+  min-height: 4.5rem;
+  @include font($fs-sm);
+}
+
+.delivery-option small {
+  color: $gray-500;
+}
+
+// ---------- Thẻ đơn hàng ----------
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-card {
+  padding: 1.25rem;
+  border-radius: $radius-xl;
+  @include glass-subtle;
+  scroll-margin-top: 6rem;
+
+  &--new {
+    border-color: rgba($emerald-400, 0.5);
+    box-shadow: 0 0 25px rgba($emerald-400, 0.1);
+  }
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $line;
+  }
+
+  &__code {
+    font-weight: 700;
+    color: $cyan-300;
+  }
+
+  &__date {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  &__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  &__customer {
+    margin-top: 0.75rem;
+    display: grid;
+    gap: 0.375rem;
+    @include font($fs-sm);
+
+    @include up(md) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    dt {
+      @include font($fs-xs);
+      color: $gray-500;
+    }
+
+    dd {
+      color: $gray-200;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-block: 0.875rem;
+  }
+
+  &__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid $line;
+    @include font($fs-sm);
+    color: $gray-400;
+  }
+
+  &__total {
+    @include mono;
+    color: $white;
+  }
+
+  &__note {
+    width: 100%;
+    color: $yellow-200;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.order-item {
+  display: flex;
+  gap: 0.875rem;
+
+  > img {
+    width: 3.5rem;
+    height: 4.9rem;
+    object-fit: cover;
+    border-radius: $radius;
+    background: $surface;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    min-width: 0;
+    flex: 1;
+    color: $white;
+    font-weight: 600;
+
+    a:hover {
+      color: $cyan-300;
+    }
+  }
+
+  &__meta {
+    margin-top: 0.25rem;
+    @include mono;
+    @include font($fs-sm);
+    font-weight: 400;
+    color: $gray-400;
+  }
+}
+
+// ---------- Đánh giá người bán ----------
+.review-form {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 32rem;
+  font-weight: 400;
+
+  &__text {
+    min-height: 4.5rem;
+    @include font($fs-sm);
+  }
+
+  .btn {
+    align-self: flex-start;
+  }
+}
+
+// 5 ngôi sao bấm được: radio xếp ngược (5 → 1) để CSS tô sáng các sao bên trái sao được chọn
+.star-input {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 0.125rem;
+
+  legend {
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  label {
+    font-size: 1.75rem;
+    line-height: 1;
+    color: $gray-600;
+    cursor: pointer;
+    transition: color $ease;
+  }
+
+  input:checked ~ label,
+  label:hover,
+  label:hover ~ label {
+    color: $yellow-300;
+  }
+
+  input:focus-visible + label {
+    outline: 2px solid $brand;
+    border-radius: $radius-sm;
+  }
+}
+
+// ---------- Kiểm định ký gửi (Admin) ----------
+.code-search {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 28rem;
+}
+
+.admin-listings {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-listing {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border-radius: $radius-xl;
+  @include glass-subtle;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  &__photos {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    img {
+      width: 6rem;
+      aspect-ratio: 63 / 88;
+      object-fit: cover;
+      border-radius: $radius;
+      border: 1px solid $line-strong;
+    }
+  }
+
+  &__price {
+    @include mono;
+    @include font($fs-2xl);
+    font-weight: 800;
+    color: $cyan-300;
+  }
+
+  &__side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.verify-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: $radius-lg;
+  background: rgba(0, 0, 0, 0.3);
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    legend {
+      width: 100%;
+      margin-bottom: 0.375rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .field__input {
+    @include font($fs-sm);
+    padding: 0.5rem 0.625rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+// ---------- Kiểm duyệt ----------
+.report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.report-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-radius: $radius-xl;
+  @include glass-subtle;
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__meta,
+  &__thread {
+    @include font($fs-sm);
+    color: $gray-400;
+
+    a {
+      color: $cyan-300;
+    }
+  }
+
+  &__post {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.875rem;
+    border-radius: $radius-lg;
+    background: rgba(0, 0, 0, 0.3);
+
+    .post__content {
+      margin-top: 0.375rem;
+      @include font($fs-sm);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}

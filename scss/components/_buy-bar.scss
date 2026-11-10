@@ -1,0 +1,88 @@
+// ======================================================================
+// THANH MUA HÀNG DÍNH Ở ĐÁY MÀN HÌNH
+// Hiện ra khi người dùng cuộn qua nút mua chính (trang chủ, trang chi tiết),
+// để nút "Thêm vào giỏ" luôn trong tầm tay, nhất là trên điện thoại.
+// ======================================================================
+@use "../abstracts" as *;
+
+.buy-bar {
+  position: fixed;
+  z-index: 55;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  background: rgba(16, 16, 24, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba($cyan-400, 0.3);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+
+  // Mặc định ẩn bên dưới màn hình; thêm .is-visible để trượt lên
+  transform: translateY(110%);
+  visibility: hidden;
+  transition: transform 0.3s ease, visibility 0s linear 0.3s;
+
+  &.is-visible {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.3s ease;
+  }
+
+  // Máy tính: thành một "viên" nổi ở giữa đáy màn hình
+  @include up(md) {
+    left: 50%;
+    right: auto;
+    bottom: 1rem;
+    width: 34rem;
+    margin-left: -17rem;
+    border: 1px solid rgba($cyan-400, 0.35);
+    border-radius: $radius-xl;
+    transform: translateY(calc(100% + 2rem));
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+  }
+
+  &__thumb {
+    width: 2.75rem;
+    height: 2.75rem;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: $radius;
+  }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    @include font($fs-sm);
+    font-weight: 700;
+    color: $white;
+    @include truncate;
+  }
+
+  &__price {
+    @include mono;
+    @include font($fs-sm);
+    font-weight: 700;
+    color: $cyan-300;
+    @include truncate;
+
+    span {
+      color: $gray-400;
+      font-weight: 400;
+    }
+  }
+
+  &__btn {
+    flex-shrink: 0;
+    padding: 0.75rem 1rem;
+    @include font($fs-sm);
+    box-shadow: $glow-cyan;
+  }
+}

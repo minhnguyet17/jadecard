@@ -1,0 +1,687 @@
+// ======================================================================
+// THÀNH PHẦN DÙNG CHUNG CHO KÝ GỬI, ĐƠN HÀNG, BỘ SƯU TẬP
+// huy hiệu xác thực, nhãn trạng thái, sao đánh giá, khung người bán, ô chọn thẻ,
+// thẻ tin thu nhỏ (F51), thẻ sản phẩm đầu topic (F50), thẻ xem nhanh (F54), hộp thoại
+// ======================================================================
+@use "../abstracts" as *;
+
+// ---------- Huy hiệu ----------
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  @include mono;
+  font-size: 10px;
+  line-height: 1.25rem;
+  font-weight: 700;
+  padding: 0 0.5rem;
+  border-radius: $radius-sm;
+  border: 1px solid $line-strong;
+  color: $gray-300;
+  background: rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+  text-transform: uppercase;
+
+  .icon {
+    font-size: 0.875rem;
+  }
+
+  &--verified {
+    color: $cyan-300;
+    border-color: rgba($cyan-400, 0.5);
+    background: rgba(8, 40, 48, 0.85);
+  }
+
+  &--pending {
+    color: $yellow-300;
+    border-color: rgba($yellow-400, 0.5);
+    background: rgba(48, 40, 8, 0.85);
+  }
+
+  &--sold {
+    color: #fff;
+    border-color: $red-500;
+    background: rgba($red-500, 0.85);
+  }
+}
+
+// ---------- Nhãn trạng thái (tin ký gửi, đơn hàng) ----------
+.status {
+  display: inline-flex;
+  align-items: center;
+  @include font($fs-xs);
+  font-weight: 700;
+  padding: 0.125rem 0.625rem;
+  border-radius: $radius-full;
+  border: 1px solid $line-strong;
+  color: $gray-300;
+  background: rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+
+  // Đang chờ / đang xử lý
+  &--pending,
+  &--confirmed,
+  &--held,
+  &--reserved,
+  &--shipping,
+  &--ready {
+    color: $yellow-300;
+    border-color: rgba($yellow-400, 0.4);
+    background: rgba($yellow-400, 0.08);
+  }
+  // Đang bán / hoàn tất tốt
+  &--active,
+  &--completed,
+  &--sold,
+  &--settled {
+    color: $emerald-300;
+    border-color: rgba($emerald-400, 0.4);
+    background: rgba($emerald-400, 0.08);
+  }
+  // Kết thúc không thành
+  &--rejected,
+  &--cancelled,
+  &--expired_verify,
+  &--expired_listing,
+  &--withdrawn {
+    color: $red-300;
+    border-color: rgba($red-500, 0.35);
+    background: rgba($red-500, 0.08);
+  }
+}
+
+// ---------- Sao đánh giá (F56) ----------
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: $gray-400;
+  white-space: nowrap;
+
+  &--empty {
+    color: $gray-500;
+  }
+
+  &__value {
+    color: $white;
+    font-weight: 700;
+  }
+}
+
+.stars__icons {
+  color: $yellow-300;
+  letter-spacing: 0.05em;
+}
+
+// ---------- Khung người bán thu gọn ----------
+.seller-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  border-radius: $radius-lg;
+  background: rgba(0, 0, 0, 0.3);
+
+  &__text {
+    min-width: 0;
+    @include font($fs-sm);
+  }
+
+  &__meta {
+    margin-top: 0.125rem;
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+// ---------- Nút dạng chữ ----------
+.link-button {
+  color: $cyan-300;
+  font-weight: 600;
+  @include font($fs-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: $white;
+  }
+
+  &--danger {
+    color: $red-300;
+  }
+}
+
+.btn--danger {
+  color: $red-300;
+  border-color: rgba($red-500, 0.35);
+
+  &:hover {
+    background: rgba($red-500, 0.12);
+  }
+}
+
+.empty-note {
+  @include font($fs-sm);
+  color: $gray-500;
+  padding: 0.75rem 0;
+}
+
+.section-label {
+  margin-bottom: 0.75rem;
+  @include mono;
+  @include font($fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $gray-400;
+}
+
+// ---------- Khối theo bước (đăng tin ký gửi, thêm thẻ) ----------
+.step-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  @include glass-subtle;
+  border-radius: $radius-xl;
+
+  @include up(md) {
+    padding: 1.5rem;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__num {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-full;
+    background: $cyan-400;
+    color: #000;
+    @include mono;
+    @include font($fs-sm);
+    font-weight: 700;
+  }
+}
+
+// ---------- Ô chọn thẻ (tra TCGdex) ----------
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__search {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @include up(sm) {
+      flex-direction: row;
+    }
+
+    .btn {
+      flex-shrink: 0;
+    }
+  }
+
+  &__hint {
+    @include font($fs-sm);
+    color: $gray-400;
+
+    &--error {
+      color: $red-300;
+    }
+  }
+
+  &__results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+    gap: 0.625rem;
+    max-height: 26rem;
+    overflow-y: auto;
+
+    &:has(.picker__hint) {
+      display: block;
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.375rem;
+    border-radius: $radius-lg;
+    border: 1px solid $line-strong;
+    background: rgba(255, 255, 255, 0.03);
+    text-align: left;
+    transition: border-color $ease;
+
+    &:hover {
+      border-color: rgba($cyan-400, 0.6);
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 63 / 88; // tỉ lệ một lá thẻ Pokémon
+      object-fit: cover;
+      border-radius: $radius;
+      background: $surface;
+    }
+  }
+
+  &__name {
+    @include font($fs-xs);
+    font-weight: 600;
+    color: $white;
+  }
+
+  &__id {
+    @include mono;
+    font-size: 10px;
+    color: $gray-500;
+  }
+
+  &__chosen {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: $radius-lg;
+    border: 1px solid rgba($cyan-400, 0.4);
+    background: rgba($cyan-400, 0.05);
+
+    > img {
+      width: 7rem;
+      flex-shrink: 0;
+      aspect-ratio: 63 / 88;
+      object-fit: cover;
+      border-radius: $radius;
+    }
+  }
+
+  &__chosen-name {
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__chosen-meta {
+    @include font($fs-sm);
+    color: $gray-400;
+  }
+
+  &__variants {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  &__variant {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    @include font($fs-sm);
+    color: $white;
+
+    input {
+      accent-color: $cyan-400;
+    }
+  }
+
+  &__price {
+    margin-left: auto;
+    @include mono;
+    color: $cyan-300;
+  }
+
+  &__note {
+    margin-top: 0.5rem;
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+// ---------- Thẻ tin thu nhỏ: link tin ký gửi dán trong bài viết (F51) ----------
+.listing-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 28rem;
+  margin-block: 0.5rem;
+  padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+  border-radius: $radius-lg;
+  border: 1px solid $line-strong;
+  background: rgba(0, 0, 0, 0.35);
+  text-decoration: none !important;
+  transition: border-color $ease;
+
+  &:hover {
+    border-color: rgba($cyan-400, 0.6);
+  }
+
+  img {
+    width: 3rem;
+    aspect-ratio: 63 / 88;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $white;
+    @include truncate;
+  }
+
+  &__meta {
+    @include font($fs-xs);
+    color: $gray-400;
+  }
+
+  &__price {
+    @include mono;
+    font-weight: 700;
+    color: $cyan-300;
+  }
+}
+
+.mini-grid {
+  display: grid;
+  gap: 0.75rem;
+
+  @include up(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .listing-mini {
+    max-width: none;
+    margin: 0;
+  }
+}
+
+// ---------- Thẻ sản phẩm ở đầu topic Mua bán (F50) ----------
+.listing-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem 1.25rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: $radius-xl;
+  border: 1px solid rgba($cyan-400, 0.35);
+  background: linear-gradient(120deg, rgba($cyan-400, 0.08), rgba($purple-500, 0.06)), rgba(16, 16, 24, 0.85);
+  box-shadow: 0 0 30px rgba($cyan-400, 0.08);
+
+  @include up(md) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 1.25rem 1.5rem;
+  }
+
+  &--sold {
+    border-color: rgba($red-500, 0.4);
+    background: rgba(24, 12, 14, 0.85);
+
+    .listing-banner__price {
+      color: $gray-500;
+      text-decoration: line-through;
+    }
+  }
+
+  &__img img {
+    width: 5rem;
+    aspect-ratio: 63 / 88;
+    object-fit: cover;
+    border-radius: $radius;
+
+    @include up(md) {
+      width: 6rem;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  &__name {
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__meta {
+    @include font($fs-sm);
+    color: $gray-400;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+
+    strong {
+      color: $white;
+    }
+  }
+
+  &__buy {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+
+    @include up(md) {
+      grid-column: auto;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+  }
+
+  &__label {
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-400;
+    text-transform: uppercase;
+  }
+
+  &__price {
+    @include mono;
+    @include font($fs-2xl);
+    font-weight: 800;
+    color: $cyan-300;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+// Ảnh nhỏ + giá của tin ký gửi trên danh sách topic (F50)
+.topic-row__listing {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.25rem 0.625rem 0.25rem 0.25rem;
+  border-radius: $radius;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid $line;
+
+  img {
+    width: 1.75rem;
+    aspect-ratio: 63 / 88;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+}
+
+.topic-row__listing-price {
+  @include mono;
+  @include font($fs-sm);
+  font-weight: 700;
+  color: $yellow-300;
+}
+
+// ---------- Thẻ xem nhanh khi rê avatar (F54) ----------
+.hover-card {
+  position: absolute;
+  z-index: 70;
+  width: 17rem;
+  padding: 1rem;
+  border-radius: $radius-lg;
+  border: 1px solid $line-strong;
+  background: rgba(16, 16, 24, 0.98);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $white;
+    margin-bottom: 0.25rem;
+  }
+
+  &__stats {
+    margin-top: 0.875rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+
+    div {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    dt {
+      font-size: 10px;
+      color: $gray-500;
+    }
+
+    dd {
+      @include mono;
+      font-weight: 700;
+      color: $white;
+    }
+  }
+
+  &__link {
+    display: block;
+    margin-top: 0.875rem;
+    padding: 0.5rem;
+    border-radius: $radius;
+    background: rgba($cyan-400, 0.1);
+    color: $cyan-300;
+    @include font($fs-sm);
+    font-weight: 600;
+    text-align: center;
+
+    &:hover {
+      background: rgba($cyan-400, 0.2);
+    }
+  }
+}
+
+// ---------- Công cụ Mod trên trang topic (F42) ----------
+.mod-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: $radius-lg;
+  border: 1px dashed rgba($orange-400, 0.5);
+  background: rgba($orange-400, 0.05);
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-right: 0.25rem;
+    @include mono;
+    @include font($fs-xs);
+    font-weight: 700;
+    color: $orange-300;
+    text-transform: uppercase;
+  }
+}
+
+// ---------- Hộp thoại (báo cáo bài) ----------
+.dialog {
+  width: min(28rem, calc(100vw - 2rem));
+  margin: auto;
+  padding: 1.5rem;
+  border-radius: $radius-xl;
+  border: 1px solid $line-strong;
+  background: $surface;
+  color: $text;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__note {
+    min-height: 5rem;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}
+
+// Nhóm "Quản trị" trong menu tài khoản
+.account-menu__group {
+  margin: 0.375rem 0.75rem 0.125rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid $line;
+  @include mono;
+  font-size: 10px;
+  color: $gray-500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

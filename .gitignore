@@ -1,0 +1,23 @@
+# Hệ điều hành / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Bí mật — KHÔNG đưa lên repo public
+.env
+.env.*
+!.env.example
+*.key
+secrets/
+
+# Phụ thuộc / build (nếu dùng ở giai đoạn backend)
+node_modules/
+dist/
+
+# Tài liệu nháp cá nhân
+*.tmp
+~$*
+
+# CSDL SQLite và ảnh người dùng tải lên (tạo lại bằng: npm run db:reset)
+data/

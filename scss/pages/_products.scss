@@ -1,0 +1,109 @@
+// ======================================================================
+// TRANG SẢN PHẨM (products.html): cột bộ lọc + lưới sản phẩm
+// ======================================================================
+@use "../abstracts" as *;
+
+.catalog {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: 260px 1fr;
+  }
+}
+
+// ---------- Bộ lọc ----------
+.filters {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  @include up(lg) {
+    position: sticky;
+    top: 6rem;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__head-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__reset {
+    @include font($fs-xs);
+    color: $gray-400;
+    transition: color $ease;
+
+    &:hover {
+      color: $cyan-300;
+    }
+  }
+
+  // Nút "Lọc & sắp xếp": chỉ có trên điện thoại / tablet
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    @include font($fs-xs);
+    font-weight: 600;
+    color: $cyan-300;
+    padding: 0.375rem 0.625rem;
+    border: 1px solid rgba($cyan-400, 0.3);
+    border-radius: $radius;
+
+    .icon {
+      @include font($fs-base);
+      transition: transform 0.2s ease;
+    }
+
+    @include up(lg) {
+      display: none;
+    }
+  }
+
+  &.is-open &__toggle .icon {
+    transform: rotate(180deg);
+  }
+
+  // Danh mục / set / sắp xếp: ẩn trên điện thoại cho tới khi bấm "Lọc & sắp xếp"
+  // (ô tìm kiếm luôn hiện vì dùng nhiều nhất)
+  &__more {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    @include down(lg) {
+      display: none;
+    }
+  }
+
+  &.is-open &__more {
+    display: flex;
+  }
+}
+
+.result-count {
+  @include mono;
+  @include font($fs-xs);
+  color: $gray-400;
+  margin-bottom: 1rem;
+}

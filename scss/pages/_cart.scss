@@ -1,0 +1,272 @@
+// ======================================================================
+// TRANG GIỎ HÀNG (cart.html)
+// ======================================================================
+@use "../abstracts" as *;
+
+.cart-empty {
+  padding: 3rem;
+
+  .empty-state__title {
+    @include font($fs-xl);
+    font-weight: 700;
+  }
+
+  .empty-state__text {
+    @include font($fs-base);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+}
+
+.cart-layout {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: 1fr 360px;
+  }
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// ---------- Một dòng trong giỏ ----------
+.cart-row {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 1rem;
+  align-items: center;
+
+  @include up(sm) {
+    grid-template-columns: 88px 1fr auto;
+  }
+
+  &__thumb {
+    display: block;
+    border-radius: $radius;
+    overflow: hidden;
+    background: #000;
+
+    img {
+      width: 100%;
+      aspect-ratio: 5 / 7;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $white;
+    &:hover {
+      color: $cyan-300;
+    }
+  }
+
+  &__meta {
+    @include mono;
+    font-size: 11px;
+    color: $purple-300;
+    margin-top: 0.125rem;
+    @include truncate;
+  }
+
+  &__unit {
+    @include mono;
+    @include font($fs-sm);
+    color: $gray-400;
+    margin-top: 0.25rem;
+  }
+
+  // Thành tiền + nút xóa: hàng riêng trên điện thoại, cột phải trên máy tính
+  &__side {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    @include up(sm) {
+      grid-column: span 1;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+
+  &__total {
+    @include mono;
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $cyan-300;
+  }
+
+  &__remove {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    @include font($fs-sm);
+    color: $gray-400;
+    transition: color $ease;
+
+    &:hover {
+      color: $red-300;
+    }
+
+    .icon {
+      @include font($fs-lg);
+    }
+  }
+}
+
+// Nút tăng / giảm số lượng
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+
+  &__btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: $radius;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid $line-strong;
+    transition: background-color $ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+
+  &__value {
+    @include mono;
+    width: 2rem;
+    text-align: center;
+    color: $white;
+  }
+
+  &__stock {
+    @include font($fs-xs);
+    color: $gray-500;
+    margin-left: 0.25rem;
+  }
+}
+
+// ---------- Tóm tắt đơn hàng ----------
+.summary {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  @include up(lg) {
+    position: sticky;
+    top: 6rem;
+  }
+
+  h2 {
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    @include font($fs-sm);
+  }
+
+  &__lines {
+    @include font($fs-sm);
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      color: $gray-400;
+    }
+
+    > div + div {
+      margin-top: 0.5rem;
+    }
+
+    dd {
+      @include mono;
+      color: $white;
+    }
+  }
+
+  &__total {
+    align-items: baseline;
+    border-top: 1px solid $line-strong;
+    padding-top: 0.75rem;
+
+    dt {
+      color: $white;
+      font-weight: 600;
+    }
+
+    dd {
+      @include font($fs-2xl);
+      font-weight: 900;
+      color: $cyan-300 !important;
+    }
+  }
+
+  &__order {
+    width: 100%;
+    background: $gray-700;
+    color: $gray-300;
+    cursor: not-allowed;
+    padding-block: 0.75rem;
+    border-radius: $radius-lg;
+    font-weight: 700;
+  }
+
+  &__note {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+// Ô chọn cách nhận hàng
+.delivery-option {
+  @include glass-subtle;
+  border-radius: $radius-lg;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+
+  &__name {
+    flex: 1;
+    color: $white;
+  }
+
+  &__price {
+    @include mono;
+    color: $gray-400;
+  }
+}

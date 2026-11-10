@@ -1,0 +1,47 @@
+// ======================================================================
+// JadeCard — FILE SCSS CHÍNH
+// Biên dịch ra css/style.css bằng lệnh:  npm run build:css
+// (hoặc npm run watch:css để tự biên dịch lại mỗi khi lưu file)
+//
+// Thư mục:
+//   abstracts/  biến (màu, font, cỡ chữ, điểm ngắt) và mixin — không sinh ra CSS
+//   base/       reset trình duyệt, kiểu chung, lớp tiện ích nhỏ
+//   layout/     header, footer, khung trang
+//   components/ nút, ô nhập, thẻ sản phẩm, thanh mua hàng...
+//   pages/      phần riêng của từng trang
+// ======================================================================
+
+@use "base/reset";
+@use "base/base";
+
+@use "layout/page";
+@use "layout/header";
+@use "layout/footer";
+@use "layout/account-menu";
+
+@use "components/surfaces";
+@use "components/buttons";
+@use "components/forms";
+@use "components/product-card";
+@use "components/buy-bar";
+@use "components/community";
+@use "components/market";
+@use "components/hashtag";
+
+@use "pages/home";
+@use "pages/products";
+@use "pages/detail";
+@use "pages/cart";
+@use "pages/about";
+@use "pages/check";
+
+// Cộng đồng (từ v2.0): tài khoản, diễn đàn, hồ sơ
+@use "pages/auth";
+@use "pages/forum";
+@use "pages/thread";
+@use "pages/profile";
+
+// Ký gửi, đơn hàng, bộ sưu tập (cộng đồng đợt 2)
+@use "pages/consign";
+@use "pages/orders";
+@use "pages/collection";

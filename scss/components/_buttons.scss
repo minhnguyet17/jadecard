@@ -1,0 +1,103 @@
+// ======================================================================
+// NÚT BẤM VÀ LIÊN KẾT HÀNH ĐỘNG
+// Cách dùng: class="btn btn--primary btn--md"
+// ======================================================================
+@use "../abstracts" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: $radius-lg;
+  font-weight: 700;
+  transition: all $ease;
+  cursor: pointer;
+
+  // ----- Kiểu màu -----
+  &--primary {
+    background: $cyan-400;
+    color: #000;
+    &:hover {
+      background: $cyan-300;
+    }
+  }
+
+  &--yellow {
+    background: $yellow-400;
+    color: #000;
+    &:hover {
+      background: $yellow-300;
+    }
+  }
+
+  // Nút viền trên nền kính
+  &--ghost {
+    @include glass;
+    border-color: rgba($cyan-400, 0.3);
+    color: $cyan-300;
+    font-weight: 600;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  // Nút phụ nền mờ
+  &--soft {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid $line-strong;
+    font-weight: 600;
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  &--glow {
+    box-shadow: $glow-cyan;
+    &:hover {
+      box-shadow: $glow-cyan-strong;
+    }
+  }
+
+  // ----- Kích thước -----
+  &--sm {
+    padding: 0.625rem 1.25rem;
+  }
+  &--md {
+    padding: 0.75rem 1.5rem;
+  }
+  &--lg {
+    padding: 0.875rem 1.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  &--block {
+    width: 100%;
+  }
+
+  &:disabled {
+    background: $gray-600;
+    color: $gray-300;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+// Liên kết chữ có mũi tên: "Xem tất cả →"
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: $cyan-300;
+  font-weight: 600;
+  align-self: flex-start;
+  transition: color $ease;
+
+  &:hover {
+    color: $white;
+  }
+
+  &--yellow {
+    color: $yellow-300;
+  }
+}

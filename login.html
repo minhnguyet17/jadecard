@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Đăng nhập — JadeCard</title>
+  <meta name="description" content="Đăng nhập tài khoản JadeCard bằng email và mật khẩu.">
+  <!-- Font chữ (có hỗ trợ tiếng Việt) và bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+  <!-- CSS của dự án: viết bằng SCSS trong thư mục scss/, biên dịch ra css/style.css (npm run build:css) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER (dùng chung mọi trang) ===================== -->
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a href="index.html" class="logo">
+        <span class="logo__mark"><span class="logo__mark-inner">J</span></span>
+        <span class="logo__text">
+          <span class="logo__name">JADECARD</span>
+          <span class="logo__tagline">POKÉMON TCG SHOP</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Menu chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="consign.html">Ký gửi</a>
+        <a href="forum.html">Diễn đàn</a>
+        <a href="check-card.html">Check thẻ</a>
+      </nav>
+
+      <!-- Ô tìm kiếm: gửi từ khóa sang trang Sản phẩm (?q=...) -->
+      <form action="products.html" method="get" class="header-search" role="search">
+        <span class="icon" aria-hidden="true">search</span>
+        <label for="header-search" class="sr-only">Tìm sản phẩm</label>
+        <input id="header-search" name="q" type="search" placeholder="Tìm tên thẻ hoặc số thẻ (025/165)">
+      </form>
+
+      <!-- Giỏ hàng: số trên biểu tượng do js/cart.js cập nhật -->
+      <a href="cart.html" class="cart-link">
+        <span class="icon" aria-hidden="true">shopping_bag</span>
+        <span class="sr-only">Giỏ hàng, số sản phẩm:</span>
+        <span id="cart-count" class="cart-link__count hidden">0</span>
+      </a>
+
+      <!-- Tài khoản: js/account-menu.js đổi thành avatar + tag chức vụ khi đã đăng nhập -->
+      <div id="account-menu" class="account-menu">
+        <a href="login.html" class="account-menu__login">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span class="account-menu__login-text">Đăng nhập</span>
+        </a>
+      </div>
+    </div>
+    <!-- Menu trên điện thoại: một hàng cuộn ngang -->
+    <nav class="mobile-nav no-scrollbar" aria-label="Menu chính (điện thoại)">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html">Sản phẩm</a>
+      <a href="consign.html">Ký gửi</a>
+      <a href="forum.html">Diễn đàn</a>
+      <a href="check-card.html">Check thẻ</a>
+    </nav>
+  </header>
+
+  <main class="auth">
+    <div class="auth__glow" aria-hidden="true"></div>
+    <div class="auth__glow auth__glow--2" aria-hidden="true"></div>
+
+    <div class="auth__inner auth__inner--single">
+      <section class="auth-card" aria-labelledby="login-title">
+        <p class="auth-card__eyebrow"><span class="icon icon--base" aria-hidden="true">login</span> Thành viên JadeCard</p>
+        <h1 id="login-title" class="auth-card__title">Đăng nhập JadeCard</h1>
+        <p class="auth-card__lead">Vào diễn đàn, theo dõi chức vụ và (sắp tới) quản lý tin ký gửi của bạn.</p>
+
+        <form id="login-form" class="auth-card__form" novalidate>
+          <div id="form-alert" class="hidden"></div>
+
+          <div class="field">
+            <div class="field__top"><label class="field__label" for="email">Email</label></div>
+            <div class="field__control">
+              <span class="icon field__icon" aria-hidden="true">alternate_email</span>
+              <input id="email" class="field__input" type="email" autocomplete="email" placeholder="ban@example.com" aria-describedby="email-error" required>
+            </div>
+            <p id="email-error" class="field__error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <div class="field__top"><label class="field__label" for="password">Mật khẩu</label>
+              <span class="field__aside"><a href="forgot-password.html">Quên mật khẩu?</a></span>
+            </div>
+            <div class="field__control">
+              <span class="icon field__icon" aria-hidden="true">lock</span>
+              <input id="password" class="field__input" type="password" autocomplete="current-password" aria-describedby="password-error" required>
+              <button type="button" class="field__toggle" data-toggle-password="password" aria-label="Hiện mật khẩu"><span class="icon" aria-hidden="true">visibility</span></button>
+            </div>
+            <p id="password-error" class="field__error" aria-live="polite"></p>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--md btn--block btn--glow">
+            <span class="icon" aria-hidden="true">login</span> Đăng nhập
+          </button>
+        </form>
+
+        <p class="auth-card__switch">Chưa có tài khoản JadeCard? <a id="register-link" href="register.html">Đăng ký ngay →</a></p>
+        <p class="auth-card__note">
+          <span class="icon" aria-hidden="true">shield</span>
+          <span>Sai mật khẩu 5 lần liên tiếp thì tài khoản tạm khóa đăng nhập 15 phút.</span>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER (dùng chung mọi trang) ===================== -->
+  <footer class="site-footer">
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__brand">JADECARD</p>
+        <p>Cửa hàng thẻ bài Pokémon TCG: hàng nguyên hộp, thẻ lẻ và thu mua thẻ.</p>
+      </div>
+      <nav aria-label="Liên kết cuối trang">
+        <p class="site-footer__title">Trang</p>
+        <ul>
+          <li><a href="products.html">Sản phẩm</a></li>
+          <li><a href="consign.html">Ký gửi</a></li>
+          <li><a href="collection.html">Bộ sưu tập</a></li>
+          <li><a href="forum.html">Diễn đàn</a></li>
+          <li><a href="check-card.html">Check thẻ</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="about.html#thu-mua">Chính sách thu mua</a></li>
+          <li><a href="forum-rules.html">Quy định diễn đàn</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="site-footer__title">Liên hệ <span>(dữ liệu mẫu)</span></p>
+        <ul>
+          <li>Địa chỉ: 123 Đường Mẫu, Quận 1, TP.HCM</li>
+          <li>Giờ mở cửa: 10:00 – 21:00, thứ 2 – Chủ nhật</li>
+          <li>Email: hello@jadecard.vn</li>
+        </ul>
+      </div>
+      <div class="site-footer__legal">
+        Đồ án học tập, học phần Phát triển ứng dụng WEB/TMĐT (UEH). Không liên kết với The Pokémon Company. Ảnh và dữ liệu thẻ: TCGdex. Giá chỉ mang tính tham khảo.
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript: dữ liệu shop + giỏ hàng (số trên biểu tượng giỏ) → gọi API → giao diện cộng đồng → menu tài khoản → trang này -->
+  <script src="js/data/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/community-ui.js"></script>
+  <script src="js/account-menu.js"></script>
+  <script src="js/auth-forms.js"></script>
+  <script src="js/login-page.js"></script>
+</body>
+</html>

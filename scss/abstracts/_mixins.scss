@@ -1,0 +1,74 @@
+// ======================================================================
+// MIXIN: các đoạn CSS hay lặp lại, gọi bằng @include
+// ======================================================================
+@use "sass:map";
+@use "sass:list";
+@use "variables" as *;
+
+// Màn hình từ độ rộng $bp trở lên. Ví dụ: @include up(lg) { ... }
+@mixin up($bp) {
+  @media (min-width: map.get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// Màn hình nhỏ hơn $bp (dùng khi chỉ muốn chỉnh riêng cho điện thoại / tablet)
+@mixin down($bp) {
+  @media (max-width: (map.get($breakpoints, $bp) - 0.02px)) {
+    @content;
+  }
+}
+
+// Cỡ chữ + chiều cao dòng lấy từ biến $fs-*. Ví dụ: @include font($fs-lg)
+@mixin font($size) {
+  font-size: list.nth($size, 1);
+  line-height: list.nth($size, 2);
+}
+
+// Chữ đơn cách (font mono) dùng cho giá, mã thẻ, nhãn nhỏ
+@mixin mono {
+  font-family: $font-mono;
+}
+
+// Cắt chữ dài thành "..." trên một dòng
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Khung nội dung: rộng tối đa 1280px, nằm giữa màn hình
+@mixin container {
+  max-width: $container;
+  margin-inline: auto;
+}
+
+// Khoảng đệm hai bên của mỗi khu vực: 1rem trên điện thoại, 2rem từ tablet
+// (giá trị --gutter khai báo ở base/_base.scss)
+@mixin gutter-x {
+  padding-inline: var(--gutter);
+}
+
+// Khối "kính mờ": nền tối trong suốt + làm mờ phía sau
+@mixin glass {
+  background: rgba(16, 16, 24, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@mixin glass-subtle {
+  background: rgba(22, 22, 34, 0.55);
+  border: 1px solid $line;
+}
+
+// Vầng sáng trang trí phía sau (hình tròn mờ)
+@mixin glow-blob($size, $blur, $bg) {
+  position: absolute;
+  width: $size;
+  height: $size;
+  background: $bg;
+  border-radius: $radius-full;
+  filter: blur($blur);
+  pointer-events: none;
+}

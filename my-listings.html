@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tin ký gửi của tôi — JadeCard</title>
+  <meta name="description" content="Quản lý tin ký gửi thẻ tại JadeCard.">
+  <!-- Font chữ (có hỗ trợ tiếng Việt) và bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+  <!-- CSS của dự án: viết bằng SCSS trong thư mục scss/, biên dịch ra css/style.css (npm run build:css) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER (dùng chung mọi trang) ===================== -->
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a href="index.html" class="logo">
+        <span class="logo__mark"><span class="logo__mark-inner">J</span></span>
+        <span class="logo__text">
+          <span class="logo__name">JADECARD</span>
+          <span class="logo__tagline">POKÉMON TCG SHOP</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Menu chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="consign.html" aria-current="page">Ký gửi</a>
+        <a href="forum.html">Diễn đàn</a>
+        <a href="check-card.html">Check thẻ</a>
+      </nav>
+
+      <!-- Ô tìm kiếm: gửi từ khóa sang trang Sản phẩm (?q=...) -->
+      <form action="products.html" method="get" class="header-search" role="search">
+        <span class="icon" aria-hidden="true">search</span>
+        <label for="header-search" class="sr-only">Tìm sản phẩm</label>
+        <input id="header-search" name="q" type="search" placeholder="Tìm tên thẻ hoặc số thẻ (025/165)">
+      </form>
+
+      <!-- Giỏ hàng: số trên biểu tượng do js/cart.js cập nhật -->
+      <a href="cart.html" class="cart-link">
+        <span class="icon" aria-hidden="true">shopping_bag</span>
+        <span class="sr-only">Giỏ hàng, số sản phẩm:</span>
+        <span id="cart-count" class="cart-link__count hidden">0</span>
+      </a>
+
+      <!-- Tài khoản: js/account-menu.js đổi thành avatar + tag chức vụ khi đã đăng nhập -->
+      <div id="account-menu" class="account-menu">
+        <a href="login.html" class="account-menu__login">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span class="account-menu__login-text">Đăng nhập</span>
+        </a>
+      </div>
+    </div>
+    <!-- Menu trên điện thoại: một hàng cuộn ngang -->
+    <nav class="mobile-nav no-scrollbar" aria-label="Menu chính (điện thoại)">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html">Sản phẩm</a>
+      <a href="consign.html" aria-current="page">Ký gửi</a>
+      <a href="forum.html">Diễn đàn</a>
+      <a href="check-card.html">Check thẻ</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page__stack">
+      <nav class="breadcrumb" aria-label="Đường dẫn"><a href="consign.html">Ký gửi</a> / <span class="breadcrumb__current">Tin ký gửi của tôi</span></nav>
+      <div class="section-head">
+        <div class="page-head">
+          <h1 class="page-title">Tin ký gửi của tôi</h1>
+          <p class="page-lead">Theo dõi trạng thái, trả lời đề nghị trả giá, rút tin và xem số tiền sẽ nhận tại quầy.</p>
+        </div>
+        <a class="btn btn--primary btn--md" href="new-listing.html"><span class="icon" aria-hidden="true">add_box</span> Đăng tin mới</a>
+      </div>
+      <div id="my-listings" class="my-listings"><p class="loading"><span class="icon" aria-hidden="true">progress_activity</span> Đang tải…</p></div>
+      <noscript><p class="noscript">Trang này cần bật JavaScript và chạy server (npm start).</p></noscript>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER (dùng chung mọi trang) ===================== -->
+  <footer class="site-footer">
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__brand">JADECARD</p>
+        <p>Cửa hàng thẻ bài Pokémon TCG: hàng nguyên hộp, thẻ lẻ và thu mua thẻ.</p>
+      </div>
+      <nav aria-label="Liên kết cuối trang">
+        <p class="site-footer__title">Trang</p>
+        <ul>
+          <li><a href="products.html">Sản phẩm</a></li>
+          <li><a href="consign.html">Ký gửi</a></li>
+          <li><a href="collection.html">Bộ sưu tập</a></li>
+          <li><a href="forum.html">Diễn đàn</a></li>
+          <li><a href="check-card.html">Check thẻ</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="about.html#thu-mua">Chính sách thu mua</a></li>
+          <li><a href="forum-rules.html">Quy định diễn đàn</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="site-footer__title">Liên hệ <span>(dữ liệu mẫu)</span></p>
+        <ul>
+          <li>Địa chỉ: 123 Đường Mẫu, Quận 1, TP.HCM</li>
+          <li>Giờ mở cửa: 10:00 – 21:00, thứ 2 – Chủ nhật</li>
+          <li>Email: hello@jadecard.vn</li>
+        </ul>
+      </div>
+      <div class="site-footer__legal">
+        Đồ án học tập, học phần Phát triển ứng dụng WEB/TMĐT (UEH). Không liên kết với The Pokémon Company. Ảnh và dữ liệu thẻ: TCGdex. Giá chỉ mang tính tham khảo.
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript: dữ liệu shop + giỏ hàng (số trên biểu tượng giỏ) → gọi API → giao diện cộng đồng → menu tài khoản → trang này -->
+  <script src="js/data/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/community-ui.js"></script>
+  <script src="js/account-menu.js"></script>
+  <script src="js/my-listings-page.js"></script>
+</body>
+</html>

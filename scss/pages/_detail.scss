@@ -1,0 +1,215 @@
+// ======================================================================
+// TRANG CHI TIẾT SẢN PHẨM (product-detail.html, tạo bằng js/product-detail.js)
+// ======================================================================
+@use "../abstracts" as *;
+
+.detail {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  // ---------- Ảnh ----------
+  &__media {
+    @include glass;
+    border-radius: $radius-xl;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top right, rgba($cyan-500, 0.1), rgba($purple-600, 0.1), rgba($pink-500, 0.1));
+    filter: blur(64px);
+  }
+
+  &__frame {
+    position: relative;
+    border-radius: $radius-xl;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 24rem;
+
+    img {
+      width: 100%;
+      border-radius: $radius-lg;
+    }
+  }
+
+  // ---------- Thông tin ----------
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__title {
+    @include font($fs-3xl);
+    line-height: 1.25;
+    font-weight: 800;
+    color: $white;
+
+    @include up(sm) {
+      @include font($fs-4xl);
+    }
+  }
+
+  &__desc {
+    color: $gray-300;
+    line-height: 1.625;
+  }
+
+  &__not-found {
+    @include up(lg) {
+      grid-column: span 2;
+    }
+
+    .btn {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  &__not-found-title {
+    @include font($fs-2xl);
+    font-weight: 700;
+    color: $white;
+  }
+}
+
+// Ô giá bán + giá tham khảo
+.price-box {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+
+  @include up(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &__label {
+    @include font($fs-xs);
+    color: $gray-400;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  &__value {
+    @include mono;
+    @include font($fs-3xl);
+    font-weight: 900;
+    color: $cyan-300;
+    margin-top: 0.25rem;
+  }
+
+  &__ref {
+    @include up(sm) {
+      border-left: 1px solid $line-strong;
+      padding-left: 1rem;
+    }
+  }
+
+  &__ref-value {
+    @include mono;
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+    margin-top: 0.25rem;
+  }
+
+  &__note {
+    @include font($fs-xs);
+    color: $gray-500;
+    margin-top: 0.25rem;
+  }
+}
+
+// Bảng thuộc tính (Set, Số thẻ, Độ hiếm...)
+.attr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  @include font($fs-sm);
+
+  @include up(sm) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  > div {
+    @include glass-subtle;
+    border-radius: $radius-lg;
+    padding: 0.75rem;
+  }
+
+  dt {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  dd {
+    color: $white;
+    font-weight: 600;
+    margin-top: 0.125rem;
+  }
+}
+
+// Ô số lượng + nút thêm vào giỏ
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+
+  label {
+    @include font($fs-sm);
+    color: $gray-400;
+  }
+
+  input {
+    width: 5rem;
+    padding: 0.625rem 0.75rem;
+    background: $surface;
+    border: 1px solid $line-strong;
+    border-radius: $radius;
+    color: $white;
+    @include mono;
+  }
+
+  .btn {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+  }
+}
+
+// Quyền lợi khi mua (quay video, giao hàng)
+.perks {
+  @include font($fs-sm);
+  color: $gray-400;
+
+  li {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  li + li {
+    margin-top: 0.5rem;
+  }
+
+  .icon {
+    @include font($fs-lg);
+    color: $cyan-300;
+  }
+}

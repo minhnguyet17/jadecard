@@ -1,0 +1,230 @@
+// ======================================================================
+// HỒ SƠ THÀNH VIÊN (F41): đầu hồ sơ, tiến độ chức vụ, thang 7 chức vụ, các tab
+// ======================================================================
+@use "../abstracts" as *;
+
+.profile-head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  @include glass;
+  border-radius: $radius-xl;
+  background: linear-gradient(120deg, rgba($purple-500, 0.1), rgba($cyan-400, 0.06)), rgba(16, 16, 24, 0.65);
+  text-align: center;
+
+  @include up(md) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2rem 2.25rem;
+    text-align: left;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    @include up(md) {
+      align-items: flex-start;
+    }
+  }
+
+  &__name {
+    @include font($fs-3xl);
+    font-weight: 800;
+    color: $white;
+    overflow-wrap: anywhere;
+  }
+
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 2rem;
+    margin-top: 0.5rem;
+
+    div {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    dt {
+      @include mono;
+      @include font($fs-xs);
+      color: $gray-500;
+      text-transform: uppercase;
+    }
+
+    dd {
+      @include mono;
+      @include font($fs-lg);
+      font-weight: 700;
+      color: $white;
+    }
+  }
+
+  &__me {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    @include font($fs-xs);
+    color: $gray-400;
+
+    @include up(md) {
+      margin-left: auto;
+      align-self: flex-start;
+    }
+  }
+}
+
+// ---------- Tiến độ chức vụ ----------
+.profile-rank {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  @include glass-subtle;
+  border-radius: $radius-xl;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.rank-progress {
+  &__text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+    @include font($fs-sm);
+    color: $gray-400;
+
+    strong {
+      @include mono;
+      color: $white;
+    }
+  }
+
+  &__bar {
+    margin-top: 0.75rem;
+    height: 0.625rem;
+    border-radius: $radius-full;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, $cyan-400, $purple-300, #f9a8d4);
+      box-shadow: 0 0 12px rgba($cyan-400, 0.5);
+    }
+  }
+}
+
+// Thang 7 chức vụ: đã qua (sáng), hiện tại (viền), chưa tới (mờ)
+.rank-ladder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: $radius-lg;
+    border: 1px solid transparent;
+    opacity: 0.45;
+
+    &.is-done {
+      opacity: 0.85;
+    }
+
+    &.is-current {
+      opacity: 1;
+      border-color: rgba($cyan-400, 0.5);
+      background: rgba($cyan-400, 0.08);
+    }
+  }
+
+  &__min {
+    @include mono;
+    font-size: 10px;
+    color: $gray-500;
+  }
+}
+
+// ---------- Tab ----------
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  border-bottom: 1px solid $line-strong;
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    @include font($fs-sm);
+    font-weight: 600;
+    color: $gray-400;
+    white-space: nowrap;
+
+    &:hover {
+      color: $white;
+    }
+
+    &[aria-selected="true"] {
+      color: $cyan-300;
+      border-bottom-color: $cyan-400;
+    }
+
+    .icon {
+      @include font($fs-lg);
+    }
+  }
+
+  &__panel {
+    padding-top: 1.25rem;
+  }
+}
+
+// ---------- Topic gần đây ----------
+.profile-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__item {
+    padding: 0.875rem 1rem;
+    @include glass-subtle;
+    border-radius: $radius-lg;
+  }
+
+  &__title {
+    font-weight: 600;
+    color: $white;
+
+    &:hover {
+      color: $cyan-300;
+    }
+  }
+
+  &__meta {
+    margin-top: 0.25rem;
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}

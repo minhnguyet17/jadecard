@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quy định diễn đàn — JadeCard</title>
+  <meta name="description" content="Quy định diễn đàn JadeCard: mua bán qua ký gửi, không lừa đảo, tôn trọng nhau, đăng đúng tag.">
+  <!-- Font chữ (có hỗ trợ tiếng Việt) và bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+  <!-- CSS của dự án: viết bằng SCSS trong thư mục scss/, biên dịch ra css/style.css (npm run build:css) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER (dùng chung mọi trang) ===================== -->
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a href="index.html" class="logo">
+        <span class="logo__mark"><span class="logo__mark-inner">J</span></span>
+        <span class="logo__text">
+          <span class="logo__name">JADECARD</span>
+          <span class="logo__tagline">POKÉMON TCG SHOP</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Menu chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="consign.html">Ký gửi</a>
+        <a href="forum.html" aria-current="page">Diễn đàn</a>
+        <a href="check-card.html">Check thẻ</a>
+      </nav>
+
+      <!-- Ô tìm kiếm: gửi từ khóa sang trang Sản phẩm (?q=...) -->
+      <form action="products.html" method="get" class="header-search" role="search">
+        <span class="icon" aria-hidden="true">search</span>
+        <label for="header-search" class="sr-only">Tìm sản phẩm</label>
+        <input id="header-search" name="q" type="search" placeholder="Tìm tên thẻ hoặc số thẻ (025/165)">
+      </form>
+
+      <!-- Giỏ hàng: số trên biểu tượng do js/cart.js cập nhật -->
+      <a href="cart.html" class="cart-link">
+        <span class="icon" aria-hidden="true">shopping_bag</span>
+        <span class="sr-only">Giỏ hàng, số sản phẩm:</span>
+        <span id="cart-count" class="cart-link__count hidden">0</span>
+      </a>
+
+      <!-- Tài khoản: js/account-menu.js đổi thành avatar + tag chức vụ khi đã đăng nhập -->
+      <div id="account-menu" class="account-menu">
+        <a href="login.html" class="account-menu__login">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span class="account-menu__login-text">Đăng nhập</span>
+        </a>
+      </div>
+    </div>
+    <!-- Menu trên điện thoại: một hàng cuộn ngang -->
+    <nav class="mobile-nav no-scrollbar" aria-label="Menu chính (điện thoại)">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html">Sản phẩm</a>
+      <a href="consign.html">Ký gửi</a>
+      <a href="forum.html" aria-current="page">Diễn đàn</a>
+      <a href="check-card.html">Check thẻ</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page__stack page__stack--narrow">
+      <nav class="breadcrumb" aria-label="Đường dẫn"><a href="index.html">Trang chủ</a> / <a href="forum.html">Diễn đàn</a> / <span class="breadcrumb__current">Quy định diễn đàn</span></nav>
+      <div class="page-head">
+        <p class="eyebrow">F100 · THÔNG BÁO JADECARD</p>
+        <h1 class="page-title">Quy định diễn đàn</h1>
+        <p class="page-lead">Đọc kỹ trước khi đăng bài. Bài vi phạm sẽ bị ẩn; vi phạm nhiều lần sẽ bị khóa tài khoản.</p>
+      </div>
+
+      <article class="panel rules">
+        <ol class="rules__list">
+          <li>
+            <h2 class="rules__title"><span class="icon text-cyan" aria-hidden="true">verified_user</span> Mua bán bắt buộc qua Ký gửi JadeCard</h2>
+            <p>Không rao bán trực tiếp, không để số điện thoại hay số tài khoản ngân hàng trong bài. Muốn bán thẻ: đăng tin ký gửi, mang thẻ đến cửa hàng trong 7 ngày để kiểm định, rồi mở topic tag <span class="prefix prefix--yellow">Mua bán</span> trong F368 và gắn tin ký gửi vào. Phí ký gửi 8% (tối thiểu 20.000 ₫), tiền trả tại quầy khi thẻ bán được.</p>
+          </li>
+          <li>
+            <h2 class="rules__title"><span class="icon text-red" aria-hidden="true">block</span> Không lừa đảo, không thẻ giả</h2>
+            <p>Không đăng, quảng cáo hay trao đổi thẻ giả (proxy, counterfeit) dưới bất kỳ hình thức nào.</p>
+          </li>
+          <li>
+            <h2 class="rules__title"><span class="icon text-purple" aria-hidden="true">handshake</span> Tôn trọng nhau</h2>
+            <p>Không xúc phạm, không công kích cá nhân, không phân biệt đối xử, không spam. Góp ý về thẻ, không góp ý về người.</p>
+          </li>
+          <li>
+            <h2 class="rules__title"><span class="icon text-yellow" aria-hidden="true">label</span> Đăng đúng forum, đúng tag</h2>
+            <p><strong>F368 Thợ săn tiền thưởng:</strong> <span class="prefix prefix--purple">Bóc thẻ</span> khoe thẻ, <span class="prefix prefix--cyan">Định giá</span> hỏi giá, <span class="prefix prefix--yellow">Mua bán</span> kèm tin ký gửi. <strong>F666 Thần bài:</strong> luật chơi, deck, meta. <strong>F100:</strong> chỉ Admin đăng thông báo.</p>
+          </li>
+          <li>
+            <h2 class="rules__title"><span class="icon text-emerald" aria-hidden="true">military_tech</span> Like công bằng</h2>
+            <p>Chức vụ tính theo tổng like nhận được: Chiếu mới (0) → Học việc (10) → Thợ săn sơ cấp (50) → Thợ săn chuyên nghiệp (150) → Thợ săn lão làng (400) → Master (1.000) → Grand Master (2.500). Không tự like bài mình; bài bị ẩn thì like của bài không còn được tính.</p>
+          </li>
+          <li>
+            <h2 class="rules__title"><span class="icon text-orange" aria-hidden="true">flag</span> Báo cáo vi phạm</h2>
+            <p>Thấy bài vi phạm, hãy báo cáo để Mod JadeCard xử lý: ẩn bài, khóa topic hoặc khóa tài khoản tùy mức độ.</p>
+          </li>
+        </ol>
+      </article>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER (dùng chung mọi trang) ===================== -->
+  <footer class="site-footer">
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__brand">JADECARD</p>
+        <p>Cửa hàng thẻ bài Pokémon TCG: hàng nguyên hộp, thẻ lẻ và thu mua thẻ.</p>
+      </div>
+      <nav aria-label="Liên kết cuối trang">
+        <p class="site-footer__title">Trang</p>
+        <ul>
+          <li><a href="products.html">Sản phẩm</a></li>
+          <li><a href="consign.html">Ký gửi</a></li>
+          <li><a href="collection.html">Bộ sưu tập</a></li>
+          <li><a href="forum.html">Diễn đàn</a></li>
+          <li><a href="check-card.html">Check thẻ</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="about.html#thu-mua">Chính sách thu mua</a></li>
+          <li><a href="forum-rules.html">Quy định diễn đàn</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="site-footer__title">Liên hệ <span>(dữ liệu mẫu)</span></p>
+        <ul>
+          <li>Địa chỉ: 123 Đường Mẫu, Quận 1, TP.HCM</li>
+          <li>Giờ mở cửa: 10:00 – 21:00, thứ 2 – Chủ nhật</li>
+          <li>Email: hello@jadecard.vn</li>
+        </ul>
+      </div>
+      <div class="site-footer__legal">
+        Đồ án học tập, học phần Phát triển ứng dụng WEB/TMĐT (UEH). Không liên kết với The Pokémon Company. Ảnh và dữ liệu thẻ: TCGdex. Giá chỉ mang tính tham khảo.
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript: dữ liệu shop + giỏ hàng (số trên biểu tượng giỏ) → gọi API → giao diện cộng đồng → menu tài khoản → trang này -->
+  <script src="js/data/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/community-ui.js"></script>
+  <script src="js/account-menu.js"></script>
+
+</body>
+</html>

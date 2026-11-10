@@ -1,0 +1,134 @@
+// ======================================================================
+// BỀ MẶT: khối kính mờ, viền holo, nhãn (tag), trạng thái trống
+// ======================================================================
+@use "../abstracts" as *;
+
+.glass {
+  @include glass;
+}
+
+.glass-subtle {
+  @include glass-subtle;
+}
+
+// Viền holo: lớp ::before có gradient, khoét phần giữa bằng mask
+.holo-border {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.8), rgba(168, 85, 247, 0.7), rgba(244, 63, 94, 0.5), rgba(250, 204, 21, 0.7));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+// Khối kính bo góc lớn, dùng cho hầu hết các ô nội dung
+.panel {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+}
+
+// ---------- Nhãn nhỏ (danh mục, tình trạng, tồn kho) ----------
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  @include mono;
+  @include font($fs-xs);
+  padding: 0.25rem 0.625rem;
+  border-radius: $radius-sm;
+  border: 1px solid rgba($cyan-400, 0.4);
+  color: $cyan-300;
+  background: rgba($cyan-400, 0.1);
+
+  &--emerald {
+    border-color: rgba($emerald-400, 0.4);
+    color: $emerald-300;
+    background: rgba($emerald-400, 0.1);
+  }
+
+  &--yellow {
+    border-color: rgba($yellow-400, 0.4);
+    color: $yellow-300;
+    background: rgba($yellow-400, 0.1);
+  }
+}
+
+// ---------- Thông báo trống (không tìm thấy, giỏ trống) ----------
+.empty-state {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 2.5rem;
+  text-align: center;
+
+  &__title {
+    color: $white;
+    font-weight: 600;
+    margin-top: 0.75rem;
+  }
+
+  &__text {
+    @include font($fs-sm);
+    color: $gray-400;
+    margin-top: 0.25rem;
+  }
+
+  // Phiên bản lớn, các phần tử xếp dọc cách đều
+  &--stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .empty-state__title,
+    .empty-state__text {
+      margin-top: 0;
+    }
+  }
+}
+
+// ---------- Thông báo nhỏ (toast) ----------
+#toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  @include glass;
+  border-color: rgba($cyan-400, 0.4);
+  color: $white;
+  @include font($fs-sm);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: $radius-lg;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.35);
+  transition: opacity 0.3s, bottom 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+
+  a {
+    color: $cyan-300;
+    white-space: nowrap;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+// Có thanh mua hàng ở đáy thì đẩy toast lên trên thanh đó
+body.has-buy-bar #toast {
+  bottom: 6.5rem;
+}

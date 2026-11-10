@@ -1,0 +1,240 @@
+// ======================================================================
+// BỘ SƯU TẬP (F13, F14) và tab Bộ sưu tập trên hồ sơ (F27)
+// ======================================================================
+@use "../abstracts" as *;
+
+.collection-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  @include up(md) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  div {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 1rem;
+    border-radius: $radius-lg;
+    @include glass-subtle;
+  }
+
+  dt {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  dd {
+    @include mono;
+    @include font($fs-xl);
+    font-weight: 800;
+    color: $cyan-300;
+  }
+}
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 1rem 1.25rem;
+  border-radius: $radius-xl;
+  @include glass-subtle;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: $white;
+  }
+}
+
+.merge-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.add-extra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    legend {
+      width: 100%;
+      margin-bottom: 0.375rem;
+    }
+  }
+
+  &__fields {
+    display: flex;
+    gap: 0.75rem;
+
+    .field__input,
+    .field__select {
+      width: 7rem;
+      padding: 0.625rem 0.75rem;
+    }
+  }
+}
+
+// ---------- Danh sách thẻ của tôi ----------
+.collection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.collection-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem 1rem;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: $radius-lg;
+  @include glass-subtle;
+
+  @include up(lg) {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
+
+  &__img {
+    width: 3.5rem;
+    aspect-ratio: 63 / 88;
+    object-fit: cover;
+    border-radius: $radius-sm;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__meta {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  &__price {
+    margin-top: 0.25rem;
+    @include mono;
+    @include font($fs-sm);
+    color: $cyan-300;
+  }
+
+  &__search {
+    @include font($fs-sm);
+    color: $cyan-300;
+  }
+
+  .tag {
+    display: inline-block;
+    margin-top: 0.375rem;
+  }
+
+  &__controls {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.5rem;
+
+    @include up(lg) {
+      grid-column: auto;
+    }
+  }
+
+  &__select {
+    width: 5rem;
+  }
+
+  &__qty {
+    width: 5rem;
+  }
+
+  &__actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    @include up(lg) {
+      grid-column: auto;
+    }
+  }
+}
+
+// ---------- Tab Bộ sưu tập trên hồ sơ ----------
+.collection-total {
+  margin-bottom: 1rem;
+  @include font($fs-sm);
+  color: $gray-400;
+
+  strong {
+    @include mono;
+    color: $cyan-300;
+  }
+}
+
+.collection-grid {
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.875rem;
+}
+
+.collection-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+
+  img {
+    width: 100%;
+    aspect-ratio: 63 / 88;
+    object-fit: cover;
+    border-radius: $radius-lg;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    @include font($fs-xs);
+    font-weight: 600;
+    color: $white;
+  }
+
+  &__meta {
+    @include mono;
+    font-size: 10px;
+    color: $gray-500;
+  }
+
+  // Nhãn "Đang bán" + link sang tin ký gửi
+  &__sale {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 1;
+  }
+}
+
+.profile-reviews {
+  margin-top: 0.5rem;
+}
+
+.profile-head__ban {
+  @include up(md) {
+    margin-left: auto;
+  }
+}

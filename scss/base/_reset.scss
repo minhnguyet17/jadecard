@@ -1,0 +1,110 @@
+// ======================================================================
+// RESET: xóa khác biệt mặc định giữa các trình duyệt
+// (lề, cỡ chữ tiêu đề, kiểu danh sách, kiểu nút...) để tự định dạng lại từ đầu.
+// ======================================================================
+@use "../abstracts" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  font-family: $font-sans;
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  line-height: inherit;
+  background: transparent;
+  text-transform: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+:disabled {
+  cursor: default;
+}
+
+input::placeholder {
+  color: $gray-500;
+  opacity: 1;
+}
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+table {
+  border-collapse: collapse;
+  text-indent: 0;
+  border-color: inherit;
+}
+
+th {
+  text-align: inherit;
+}
+
+// Ô bảng giữ khoảng đệm mặc định 1px của trình duyệt
+td,
+th {
+  padding: 1px;
+}
+
+[hidden] {
+  display: none;
+}

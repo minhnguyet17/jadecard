@@ -1,0 +1,147 @@
+// ======================================================================
+// KHUNG TRANG: khu vực (section), tiêu đề trang, đường dẫn (breadcrumb)
+// ======================================================================
+@use "../abstracts" as *;
+
+.container {
+  @include container;
+}
+
+// Trang con (Sản phẩm, Chi tiết, Giỏ hàng, Check thẻ)
+.page {
+  @include gutter-x;
+  padding-block: 2.5rem;
+
+  &__stack {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+// Một khu vực của trang chủ / trang giới thiệu, có đường kẻ phía trên
+.section {
+  @include gutter-x;
+  padding-block: 4rem;
+  border-top: 1px solid $line;
+
+  &--compact {
+    padding-block: 3.5rem;
+  }
+}
+
+// ---------- Tiêu đề trang ----------
+.page-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.page-title {
+  @include font($fs-3xl);
+  font-weight: 800;
+  color: $white;
+
+  @include up(sm) {
+    @include font($fs-4xl);
+  }
+}
+
+.page-lead {
+  color: $gray-400;
+
+  &--narrow {
+    max-width: 48rem;
+  }
+}
+
+.breadcrumb {
+  @include mono;
+  @include font($fs-xs);
+  color: $gray-500;
+
+  a:hover {
+    color: $cyan-300;
+  }
+
+  &__current {
+    color: $cyan-300;
+  }
+}
+
+// ---------- Tiêu đề khu vực ----------
+// Dòng chữ nhỏ phía trên tiêu đề (ví dụ "THẺ LẺ · ĐÃ KIỂM ĐỊNH")
+.eyebrow {
+  @include mono;
+  @include font($fs-xs);
+  color: $cyan-300;
+  letter-spacing: 0.1em;
+
+  &--yellow {
+    color: $yellow-300;
+  }
+
+  + .section-title {
+    margin-top: 0.5rem;
+  }
+}
+
+.section-title {
+  @include font($fs-2xl);
+  font-weight: 800;
+  color: $white;
+
+  @include up(sm) {
+    @include font($fs-4xl);
+  }
+
+  &--center {
+    text-align: center;
+  }
+}
+
+// Hàng tiêu đề + link "Xem tất cả" (xếp dọc trên điện thoại, ngang trên máy tính)
+.section-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @include up(md) {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  &--center {
+    text-align: center;
+    align-items: center;
+    @include up(md) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__lead {
+    color: $gray-400;
+    margin-top: 0.75rem;
+    max-width: 40rem;
+  }
+}
+
+// Khu vực xếp dọc có khoảng cách đều
+.stack {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &--lg {
+    gap: 2.5rem;
+  }
+}
+
+.noscript {
+  color: $yellow-200;
+  @include font($fs-sm);
+}

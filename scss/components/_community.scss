@@ -1,0 +1,244 @@
+// ======================================================================
+// THÀNH PHẦN CỘNG ĐỒNG: avatar, tag chức vụ (F40), tag nhân viên,
+// tên thành viên, tag tiền tố topic, hộp thông báo, phân trang
+// ======================================================================
+@use "sass:map";
+@use "sass:list";
+@use "../abstracts" as *;
+
+// Bảng màu cho các loại tag: tên màu → (màu nền/viền, màu chữ)
+// Tên màu (cyan, purple...) được lưu trong CSDL ở bảng prefixes. Tên để trong ngoặc kép
+// để Sass hiểu là chữ, không phải mã màu.
+$tag-colors: (
+  "gray": ($gray-500, $gray-300),
+  "cyan": ($cyan-400, $cyan-300),
+  "purple": ($purple-500, $purple-300),
+  "yellow": ($yellow-400, $yellow-300),
+  "emerald": ($emerald-400, $emerald-300),
+  "pink": ($pink-500, #f9a8d4),
+  "orange": ($orange-400, $orange-300),
+  "red": ($red-500, $red-300),
+);
+
+// Tô màu một tag theo tên màu trong bảng trên
+@mixin tag-color($name) {
+  $base: list.nth(map.get($tag-colors, $name), 1);
+  $text: list.nth(map.get($tag-colors, $name), 2);
+  color: $text;
+  background: rgba($base, 0.12);
+  border-color: rgba($base, 0.4);
+}
+
+// ---------- Avatar: chữ cái đầu trên nền màu (màu đặt bằng biến --avatar-hue trong HTML) ----------
+.avatar {
+  --avatar-hue: 190;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: $radius-full;
+  background: linear-gradient(135deg, hsl(var(--avatar-hue), 70%, 55%), hsl(calc(var(--avatar-hue) + 50), 65%, 38%));
+  color: $white;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+  user-select: none;
+
+  &--xs {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+  &--sm {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+  }
+  &--md {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+  &--lg {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.5rem;
+  }
+  &--xl {
+    width: 6rem;
+    height: 6rem;
+    font-size: 2.5rem;
+  }
+}
+
+// Avatar bọc trong link (bấm mở hồ sơ)
+a:has(> .avatar) {
+  border-radius: $radius-full;
+  display: inline-flex;
+}
+
+// ---------- Tag chức vụ (F40) và tag nhân viên ----------
+.rank-tag,
+.staff-tag {
+  display: inline-flex;
+  align-items: center;
+  @include mono;
+  font-size: 10px;
+  line-height: 1rem;
+  font-weight: 600;
+  padding: 0 0.375rem;
+  border: 1px solid;
+  border-radius: $radius-sm;
+  white-space: nowrap;
+}
+
+// Chức vụ càng cao màu càng "nóng"; Grand Master có nền holo
+.rank-tag--1 { @include tag-color("gray"); }
+.rank-tag--2 { @include tag-color("emerald"); }
+.rank-tag--3 { @include tag-color("cyan"); }
+.rank-tag--4 { @include tag-color("purple"); }
+.rank-tag--5 { @include tag-color("yellow"); }
+.rank-tag--6 { @include tag-color("pink"); }
+.rank-tag--7 {
+  color: #000;
+  border-color: transparent;
+  background: linear-gradient(90deg, #00f2fe, $purple-300, #f9a8d4, $yellow-300);
+}
+
+.staff-tag--admin { @include tag-color("red"); }
+.staff-tag--mod { @include tag-color("orange"); }
+
+// Nhóm tag cạnh tên (có thể xuống dòng)
+.user-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+// Tag chức vụ đứng ngay sau tên thì chừa một khoảng nhỏ
+.user-link + .user-tags {
+  margin-left: 0.375rem;
+}
+
+// Tên thành viên (link sang hồ sơ)
+.user-link {
+  color: $white;
+  font-weight: 600;
+  transition: color $ease;
+
+  &:hover {
+    color: $cyan-300;
+  }
+}
+
+// ---------- Tag tiền tố của topic: Bóc thẻ, Định giá, Mua bán... ----------
+.prefix {
+  display: inline-flex;
+  align-items: center;
+  @include mono;
+  font-size: 11px;
+  line-height: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0 0.5rem;
+  border: 1px solid;
+  border-radius: $radius-sm;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  @each $name, $colors in $tag-colors {
+    &--#{$name} {
+      @include tag-color($name);
+    }
+  }
+}
+
+// ---------- Hộp thông báo: lỗi / thành công / thông tin ----------
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid;
+  border-radius: $radius-lg;
+  @include font($fs-sm);
+  text-align: left;
+
+  > .icon {
+    @include font($fs-xl);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    display: block;
+    font-weight: 700;
+    @include font($fs-base);
+    margin-bottom: 0.125rem;
+  }
+
+  a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &--error {
+    color: $red-300;
+    background: rgba($red-500, 0.12);
+    border-color: rgba($red-500, 0.35);
+  }
+
+  &--success {
+    color: $emerald-300;
+    background: rgba($emerald-400, 0.1);
+    border-color: rgba($emerald-400, 0.35);
+  }
+
+  &--info {
+    color: $cyan-200;
+    background: rgba($cyan-400, 0.08);
+    border-color: rgba($cyan-400, 0.3);
+  }
+}
+
+// ---------- Phân trang ----------
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+
+  &__item {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding-inline: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    @include mono;
+    @include font($fs-sm);
+    color: $gray-300;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid $line-strong;
+    border-radius: $radius;
+    transition: all $ease;
+
+    &:hover {
+      color: $white;
+      border-color: rgba($cyan-400, 0.5);
+    }
+
+    &[aria-current="page"] {
+      background: $cyan-400;
+      border-color: $cyan-400;
+      color: #000;
+      font-weight: 700;
+    }
+  }
+
+  &__gap {
+    color: $gray-500;
+    padding-inline: 0.25rem;
+  }
+}

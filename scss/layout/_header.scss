@@ -1,0 +1,213 @@
+// ======================================================================
+// HEADER (dùng chung mọi trang): logo, menu, ô tìm kiếm, giỏ hàng
+// ======================================================================
+@use "../abstracts" as *;
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba($bg, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid $line;
+
+  &__bar {
+    @include container;
+    @include gutter-x;
+    height: $header-h;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+// ---------- Logo ----------
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+
+  &__mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: $radius-lg;
+    padding: 1.5px;
+    background: linear-gradient(to top right, $cyan-400, $purple-500, $pink-500);
+  }
+
+  &__mark-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: $surface;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: $cyan-300;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  &__name {
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: $white;
+  }
+
+  &__tagline {
+    @include mono;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: $cyan-400;
+    margin-top: 0.25rem;
+  }
+}
+
+// ---------- Menu chính (máy tính từ 1024px; nhỏ hơn dùng hàng menu cuộn ngang) ----------
+.main-nav {
+  display: none;
+  align-items: center;
+  gap: 1.25rem;
+  @include font($fs-sm);
+  font-weight: 500;
+  color: $gray-300;
+
+  @include up(lg) {
+    display: flex;
+  }
+
+  a {
+    white-space: nowrap; // "Trang chủ" không bị xuống 2 dòng khi menu đông mục
+    transition: color $ease;
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+// Trang đang mở: chữ cyan đậm hơn
+.main-nav a[aria-current="page"],
+.mobile-nav a[aria-current="page"] {
+  color: $cyan-300;
+  font-weight: 600;
+}
+
+// ---------- Ô tìm kiếm (màn hình từ 1280px; nhỏ hơn thì tìm ở trang Sản phẩm) ----------
+.header-search {
+  display: none;
+  margin-left: auto;
+  align-items: center;
+  width: 14rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $line-strong;
+  border-radius: $radius;
+
+  @include up(xl) {
+    display: flex;
+  }
+
+  &:focus-within {
+    border-color: rgba($cyan-400, 0.6);
+  }
+
+  .icon {
+    @include font($fs-xl);
+    color: $gray-400;
+    margin-right: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+    @include font($fs-sm);
+    color: $white;
+    outline: none;
+  }
+}
+
+// ---------- Nút giỏ hàng + số lượng ----------
+.cart-link {
+  position: relative;
+  margin-left: auto;
+  padding: 0.5rem;
+  color: $gray-300;
+  border-radius: $radius;
+  transition: color $ease, background-color $ease;
+
+  @include up(xl) {
+    margin-left: 0;
+  }
+
+  &:hover {
+    color: $white;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .icon {
+    @include font($fs-2xl);
+  }
+
+  // Số trên biểu tượng giỏ (js/cart.js cập nhật, ẩn khi giỏ trống)
+  &__count {
+    position: absolute;
+    top: -0.125rem;
+    right: -0.125rem;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 0.25rem;
+    border-radius: $radius-full;
+    background: $cyan-400;
+    color: #000;
+    @include mono;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Số trên giỏ "nảy" lên khi vừa thêm sản phẩm
+.cart-link__count.is-bump {
+  animation: cart-bump 0.4s ease;
+}
+
+@keyframes cart-bump {
+  40% {
+    transform: scale(1.35);
+  }
+}
+
+// ---------- Menu điện thoại: một hàng cuộn ngang ----------
+.mobile-nav {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 0 1rem 0.75rem;
+  @include font($fs-sm);
+  font-weight: 500;
+  color: $gray-300;
+  white-space: nowrap;
+  // Mờ dần ở mép phải để người dùng biết còn mục khi cuộn ngang
+  mask-image: linear-gradient(to right, #000 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+
+  @include up(lg) {
+    display: none;
+  }
+
+  a {
+    padding-block: 0.25rem; // vùng chạm cao hơn trên điện thoại
+  }
+
+  a:last-child {
+    padding-right: 2rem;
+  }
+}

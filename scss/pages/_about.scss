@@ -1,0 +1,285 @@
+// ======================================================================
+// TRANG GIỚI THIỆU & THU MUA (about.html)
+// ======================================================================
+@use "../abstracts" as *;
+
+// ---------- Phần giới thiệu ----------
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  @include gutter-x;
+  padding-block: 3.5rem;
+
+  &__blob {
+    @include glow-blob(520px, 130px, linear-gradient(to top right, rgba($cyan-500, 0.15), rgba($purple-600, 0.1), rgba($pink-500, 0.1)));
+    top: -8rem;
+    left: 33.333333%;
+  }
+
+  &__inner {
+    position: relative;
+    @include container;
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+
+    @include up(lg) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__title {
+    @include font($fs-3xl);
+    line-height: 1.25;
+    font-weight: 800;
+    color: $white;
+
+    @include up(sm) {
+      @include font($fs-5xl);
+    }
+  }
+
+  &__lead {
+    font-size: 1.125rem;
+    line-height: 1.625;
+    color: $gray-300;
+
+    strong {
+      color: $white;
+    }
+  }
+
+  &__text {
+    color: $gray-400;
+    line-height: 1.625;
+  }
+}
+
+// Ba lá thẻ xòe ra như trên tay
+.card-fan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  img {
+    border-radius: $radius-lg;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  img:nth-child(1) {
+    transform: translateY(1.5rem) rotate(-6deg);
+  }
+
+  img:nth-child(2) {
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.35);
+  }
+
+  img:nth-child(3) {
+    transform: translateY(1.5rem) rotate(6deg);
+  }
+}
+
+// ---------- Ba điểm nổi bật ----------
+.feature-grid {
+  @include container;
+  display: grid;
+  gap: 1.5rem;
+
+  @include up(lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.feature-card {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+
+  h2 {
+    @include font($fs-xl);
+    font-weight: 700;
+    color: $white;
+    margin-top: 0.75rem;
+  }
+
+  p {
+    @include font($fs-sm);
+    line-height: 1.625;
+    color: $gray-400;
+    margin-top: 0.5rem;
+  }
+}
+
+// ---------- Chính sách thu mua ----------
+#thu-mua {
+  scroll-margin-top: 6rem;
+}
+
+.policy-head__text {
+  color: $gray-400;
+  margin-top: 0.75rem;
+  max-width: 48rem;
+
+  strong {
+    color: $white;
+  }
+}
+
+.policy-grid {
+  display: grid;
+  gap: 1.5rem;
+
+  @include up(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.policy-card {
+  @include glass;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h3 {
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__note {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+.formula {
+  @include mono;
+  @include font($fs-sm);
+  line-height: 1.625;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid $line-strong;
+  border-radius: $radius;
+  padding: 1rem;
+  color: $cyan-200;
+}
+
+// Bảng hệ số theo tình trạng thẻ
+.factor-table {
+  width: 100%;
+  @include font($fs-sm);
+
+  thead tr {
+    text-align: left;
+    color: $gray-400;
+    border-bottom: 1px solid $line-strong;
+  }
+
+  th {
+    padding-block: 0.5rem;
+    font-weight: 500;
+  }
+
+  tbody {
+    color: $gray-300;
+  }
+
+  tbody tr:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  td:first-child {
+    padding-block: 0.5rem;
+    @include mono;
+  }
+
+  .num {
+    text-align: right;
+  }
+
+  td.num {
+    @include mono;
+  }
+
+  td.num--text {
+    font-family: inherit;
+  }
+}
+
+// Quy trình 4 bước
+.process {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  @include font($fs-sm);
+
+  li {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__no {
+    @include mono;
+    color: $yellow-300;
+    font-weight: 700;
+  }
+
+  &__title {
+    color: $white;
+    font-weight: 600;
+  }
+
+  &__text {
+    color: $gray-400;
+  }
+}
+
+// ---------- Liên hệ ----------
+.contact {
+  @include container;
+  border-radius: $radius-xl;
+  padding: 2rem;
+  display: grid;
+  gap: 1.5rem;
+
+  @include up(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  h2 {
+    @include font($fs-2xl);
+    font-weight: 800;
+    color: $white;
+  }
+
+  &__note {
+    @include font($fs-sm);
+    color: $gray-500;
+    margin-top: 0.25rem;
+  }
+
+  ul {
+    @include font($fs-sm);
+    color: $gray-300;
+  }
+
+  li {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  li + li {
+    margin-top: 0.5rem;
+  }
+
+  .icon {
+    color: $cyan-300;
+  }
+}

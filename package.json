@@ -1,0 +1,29 @@
+{
+  "name": "jadecard-tcg-shop",
+  "version": "0.7.0",
+  "description": "JadeCard - website bán thẻ Pokémon TCG và cộng đồng người chơi (đồ án môn Phát triển ứng dụng WEB/TMĐT). Giao diện: HTML + CSS (viết bằng SCSS) + JavaScript thuần. Backend: Node.js + Express + SQLite.",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "build:css": "sass scss/main.scss css/style.css --no-source-map",
+    "watch:css": "sass --watch scss/main.scss css/style.css --no-source-map",
+    "start": "npm run build:css && node server/server.js",
+    "dev": "npm start",
+    "db:reset": "node server/seed.js --reset",
+    "sync:layout": "node scripts/sync-layout.js",
+    "test": "node --test tests/api.test.js",
+    "mail:test": "node scripts/test-mail.js"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.2",
+    "cookie-parser": "1.4.7",
+    "express": "5.1.0",
+    "multer": "2.5.0",
+    "nodemailer": "10.2.1"
+  },
+  "devDependencies": {
+    "sass": "1.83.4"
+  }
+}

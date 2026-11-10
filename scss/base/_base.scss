@@ -1,0 +1,116 @@
+// ======================================================================
+// KIỂU CHUNG CỦA TRANG + vài lớp tiện ích nhỏ dùng ở nhiều nơi
+// ======================================================================
+@use "../abstracts" as *;
+
+// Biến CSS: khoảng lề hai bên trang
+:root {
+  --gutter: 1rem;
+
+  @include up(md) {
+    --gutter: 2rem;
+  }
+}
+
+body {
+  min-height: 100vh;
+  background-color: $bg;
+  color: $text;
+  font-family: $font-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Ô chọn (radio) dùng màu nhấn của website
+input[type="radio"] {
+  accent-color: $cyan-400;
+}
+
+// Trạng thái focus khi dùng bàn phím: luôn nhìn thấy rõ (không xóa outline)
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 2px solid $brand;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+// ---------- Icon Material Symbols ----------
+.icon {
+  font-family: $font-icon;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+
+  &--base { @include font($fs-base); }
+  &--lg { @include font($fs-lg); }
+  &--xl { @include font($fs-xl); }
+  &--2xl { @include font($fs-2xl); }
+  &--3xl { @include font($fs-3xl); }
+  &--5xl { font-size: 3rem; line-height: 1; }
+  &--6xl { font-size: 3.75rem; line-height: 1; }
+}
+
+// ---------- Lớp tiện ích ----------
+// Ẩn phần tử (JavaScript bật/tắt lớp này)
+.hidden {
+  display: none !important;
+}
+
+// Ẩn khỏi màn hình nhưng trình đọc màn hình vẫn đọc được
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.mono { @include mono; }
+
+// Màu chữ dùng lại nhiều lần (icon, chữ nhấn)
+.text-white { color: $white; }
+.text-cyan { color: $cyan-300; }
+.text-purple { color: $purple-300; }
+.text-yellow { color: $yellow-300; }
+.text-emerald { color: $emerald-300; }
+.text-orange { color: $orange-300; }
+.text-red { color: $red-300; }
+.text-muted { color: $gray-400; }
+.text-dim { color: $gray-500; }
+
+// Chữ ánh holo (cầu vồng giống mặt thẻ foil)
+.holo-text {
+  background: linear-gradient(135deg, #00f2fe 0%, $purple-500 45%, $pink-500 75%, $yellow-400 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// Thanh cuộn ngang không hiện thanh cuộn
+.no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Người dùng bật "giảm chuyển động" thì tắt hiệu ứng
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}

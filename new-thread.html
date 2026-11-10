@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tạo chủ đề mới — Diễn đàn JadeCard</title>
+  <meta name="description" content="Mở topic mới trên diễn đàn JadeCard.">
+  <!-- Font chữ (có hỗ trợ tiếng Việt) và bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+  <!-- CSS của dự án: viết bằng SCSS trong thư mục scss/, biên dịch ra css/style.css (npm run build:css) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER (dùng chung mọi trang) ===================== -->
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a href="index.html" class="logo">
+        <span class="logo__mark"><span class="logo__mark-inner">J</span></span>
+        <span class="logo__text">
+          <span class="logo__name">JADECARD</span>
+          <span class="logo__tagline">POKÉMON TCG SHOP</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Menu chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="consign.html">Ký gửi</a>
+        <a href="forum.html" aria-current="page">Diễn đàn</a>
+        <a href="check-card.html">Check thẻ</a>
+      </nav>
+
+      <!-- Ô tìm kiếm: gửi từ khóa sang trang Sản phẩm (?q=...) -->
+      <form action="products.html" method="get" class="header-search" role="search">
+        <span class="icon" aria-hidden="true">search</span>
+        <label for="header-search" class="sr-only">Tìm sản phẩm</label>
+        <input id="header-search" name="q" type="search" placeholder="Tìm tên thẻ hoặc số thẻ (025/165)">
+      </form>
+
+      <!-- Giỏ hàng: số trên biểu tượng do js/cart.js cập nhật -->
+      <a href="cart.html" class="cart-link">
+        <span class="icon" aria-hidden="true">shopping_bag</span>
+        <span class="sr-only">Giỏ hàng, số sản phẩm:</span>
+        <span id="cart-count" class="cart-link__count hidden">0</span>
+      </a>
+
+      <!-- Tài khoản: js/account-menu.js đổi thành avatar + tag chức vụ khi đã đăng nhập -->
+      <div id="account-menu" class="account-menu">
+        <a href="login.html" class="account-menu__login">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span class="account-menu__login-text">Đăng nhập</span>
+        </a>
+      </div>
+    </div>
+    <!-- Menu trên điện thoại: một hàng cuộn ngang -->
+    <nav class="mobile-nav no-scrollbar" aria-label="Menu chính (điện thoại)">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html">Sản phẩm</a>
+      <a href="consign.html">Ký gửi</a>
+      <a href="forum.html" aria-current="page">Diễn đàn</a>
+      <a href="check-card.html">Check thẻ</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page__stack page__stack--narrow">
+      <nav class="breadcrumb" aria-label="Đường dẫn"><a href="index.html">Trang chủ</a> / <a href="forum.html">Diễn đàn</a> / <span class="breadcrumb__current">Tạo chủ đề mới</span></nav>
+      <div class="page-head">
+        <h1 class="page-title">Tạo chủ đề mới</h1>
+        <p class="page-lead">Chọn đúng forum và tag giúp mọi người tìm thấy topic của bạn. Ảnh: tối đa 4 ảnh JPG, PNG hoặc WebP, mỗi ảnh tối đa 5MB.</p>
+      </div>
+
+      <div id="new-thread-loading"><p class="loading"><span class="icon" aria-hidden="true">progress_activity</span> Đang tải…</p></div>
+
+      <form id="thread-form" class="panel new-thread hidden" novalidate>
+        <div id="form-alert" class="hidden"></div>
+
+        <div class="field">
+          <div class="field__top"><label class="field__label" for="forum">Forum</label></div>
+          <select id="forum" class="select field__select"></select>
+        </div>
+
+        <fieldset class="field">
+          <legend class="field__label">Tag</legend>
+          <div id="prefix-list" class="prefix-options" aria-describedby="prefixId-error"></div>
+          <p id="prefixId-error" class="field__error" aria-live="polite"></p>
+        </fieldset>
+
+        <!-- F50: chỉ hiện khi chọn tag Mua bán -->
+        <div id="listing-field" class="field hidden">
+          <div class="field__top"><label class="field__label" for="listingId">Tin ký gửi gắn kèm</label></div>
+          <select id="listingId" class="select field__select" aria-describedby="listing-hint listingId-error"></select>
+          <p id="listing-hint" class="field__hint">Thẻ sản phẩm sẽ hiện ở đầu mọi trang của topic và luôn theo trạng thái mới nhất của tin. Mỗi tin chỉ gắn một topic.</p>
+          <p id="listingId-error" class="field__error" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <div class="field__top">
+            <label class="field__label" for="title">Tiêu đề</label>
+            <span id="title-count" class="field__aside">0/120</span>
+          </div>
+          <input id="title" class="field__input" type="text" maxlength="120" placeholder="vd: Xé 1 box Surging Sparks ra Pikachu ex SIR" aria-describedby="title-error">
+          <p id="title-error" class="field__error" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <div class="field__top"><label class="field__label" for="content">Nội dung</label></div>
+          <div class="editor">
+            <div class="editor__toolbar">
+              <button id="bold-button" type="button" class="editor__tool" aria-label="In đậm"><span class="icon" aria-hidden="true">format_bold</span></button>
+              <label class="editor__tool" for="images" title="Thêm ảnh (tối đa 4)"><span class="icon" aria-hidden="true">image</span><span class="sr-only">Thêm ảnh</span></label>
+              <input id="images" class="sr-only" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+              <button id="tag-button" type="button" class="editor__tool editor__tool--text" title="Gắn hashtag thẻ hoặc bộ pack"><span class="icon" aria-hidden="true">tag</span><span>Gắn thẻ / bộ</span></button>
+              <span class="editor__help">**in đậm** · #hashtag thẻ · link tự nhận</span>
+            </div>
+            <textarea id="content" class="textarea editor__area editor__area--tall" maxlength="10000" placeholder="Kể chi tiết: thẻ gì, set nào, tình trạng ra sao…" aria-describedby="content-error"></textarea>
+          </div>
+          <p id="content-error" class="field__error" aria-live="polite"></p>
+          <div id="image-preview" class="image-preview"></div>
+          <p id="images-error" class="field__error" aria-live="polite"></p>
+        </div>
+
+        <div class="new-thread__actions">
+          <a id="cancel-link" class="btn btn--soft btn--sm" href="forum.html">Hủy</a>
+          <button type="submit" class="btn btn--primary btn--sm btn--glow"><span class="icon" aria-hidden="true">send</span> Đăng topic</button>
+        </div>
+      </form>
+      <noscript><p class="noscript">Trang này cần bật JavaScript và chạy server (npm start).</p></noscript>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER (dùng chung mọi trang) ===================== -->
+  <footer class="site-footer">
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__brand">JADECARD</p>
+        <p>Cửa hàng thẻ bài Pokémon TCG: hàng nguyên hộp, thẻ lẻ và thu mua thẻ.</p>
+      </div>
+      <nav aria-label="Liên kết cuối trang">
+        <p class="site-footer__title">Trang</p>
+        <ul>
+          <li><a href="products.html">Sản phẩm</a></li>
+          <li><a href="consign.html">Ký gửi</a></li>
+          <li><a href="collection.html">Bộ sưu tập</a></li>
+          <li><a href="forum.html">Diễn đàn</a></li>
+          <li><a href="check-card.html">Check thẻ</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="about.html#thu-mua">Chính sách thu mua</a></li>
+          <li><a href="forum-rules.html">Quy định diễn đàn</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="site-footer__title">Liên hệ <span>(dữ liệu mẫu)</span></p>
+        <ul>
+          <li>Địa chỉ: 123 Đường Mẫu, Quận 1, TP.HCM</li>
+          <li>Giờ mở cửa: 10:00 – 21:00, thứ 2 – Chủ nhật</li>
+          <li>Email: hello@jadecard.vn</li>
+        </ul>
+      </div>
+      <div class="site-footer__legal">
+        Đồ án học tập, học phần Phát triển ứng dụng WEB/TMĐT (UEH). Không liên kết với The Pokémon Company. Ảnh và dữ liệu thẻ: TCGdex. Giá chỉ mang tính tham khảo.
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript: dữ liệu shop + giỏ hàng (số trên biểu tượng giỏ) → gọi API → giao diện cộng đồng → menu tài khoản → trang này -->
+  <script src="js/data/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/community-ui.js"></script>
+  <script src="js/account-menu.js"></script>
+  <script src="js/auth-forms.js"></script>
+  <script src="js/post-editor.js"></script>
+  <script src="js/card-service.js"></script>
+  <script src="js/hashtag.js"></script>
+  <script src="js/new-thread-page.js"></script>
+</body>
+</html>

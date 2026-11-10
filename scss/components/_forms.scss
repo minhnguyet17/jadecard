@@ -1,0 +1,256 @@
+// ======================================================================
+// Ô NHẬP, Ô CHỌN, NHÃN
+// ======================================================================
+@use "../abstracts" as *;
+
+// Nhãn nhỏ phía trên ô nhập (TÌM KIẾM, DANH MỤC, ...)
+.field-label {
+  display: block;
+  @include mono;
+  @include font($fs-xs);
+  color: $cyan-300;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  @include font($fs-sm);
+  color: $white;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $line-strong;
+  border-radius: $radius;
+  transition: border-color $ease;
+
+  &:focus {
+    border-color: rgba($cyan-400, 0.6);
+  }
+}
+
+.select {
+  background: $surface;
+}
+
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  @include font($fs-sm);
+  color: $gray-300;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.form-error {
+  @include font($fs-sm);
+  color: $red-300;
+}
+
+// ======================================================================
+// Ô NHẬP CÓ NHÃN, ICON, GỢI Ý VÀ BÁO LỖI (form tài khoản, diễn đàn — từ v2.0)
+// Cấu trúc:
+//   <div class="field">
+//     <div class="field__top"><label class="field__label">EMAIL</label><span class="field__aside">0/20</span></div>
+//     <div class="field__control"><span class="icon field__icon">mail</span><input class="field__input"></div>
+//     <p class="field__hint">...</p>  <p class="field__error">...</p>
+//   </div>
+// ======================================================================
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    @include mono;
+    @include font($fs-xs);
+    font-weight: 700;
+    color: $gray-300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__aside {
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-500;
+
+    a {
+      color: $cyan-300;
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  &__control {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    position: absolute;
+    left: 0.875rem;
+    @include font($fs-xl);
+    color: $gray-500;
+    pointer-events: none;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    @include font($fs-base);
+    color: $white;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid $line-strong;
+    border-radius: $radius-lg;
+    transition: border-color $ease, box-shadow $ease;
+
+    &::placeholder {
+      color: $gray-600;
+    }
+
+    &:focus {
+      border-color: rgba($cyan-400, 0.6);
+      box-shadow: 0 0 0 3px rgba($cyan-400, 0.12);
+    }
+
+    &[aria-invalid="true"] {
+      border-color: rgba($red-500, 0.7);
+    }
+  }
+
+  // Có icon bên trái thì chữ lùi vào; có nút hiện mật khẩu bên phải thì chừa chỗ
+  &__icon ~ &__input {
+    padding-left: 2.75rem;
+  }
+  &__input:has(~ .field__toggle) {
+    padding-right: 3rem;
+  }
+
+  // Nút hiện / ẩn mật khẩu
+  &__toggle {
+    position: absolute;
+    right: 0.5rem;
+    padding: 0.375rem;
+    border-radius: $radius;
+    color: $gray-400;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  &__hint {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  &__error {
+    @include font($fs-sm);
+    color: $red-300;
+
+    a {
+      color: $cyan-300;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+// Ô soạn nội dung nhiều dòng
+.textarea {
+  width: 100%;
+  min-height: 9rem;
+  padding: 0.75rem 0.875rem;
+  @include font($fs-base);
+  color: $white;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid $line-strong;
+  border-radius: $radius-lg;
+  resize: vertical;
+
+  &::placeholder {
+    color: $gray-600;
+  }
+
+  &:focus {
+    border-color: rgba($cyan-400, 0.6);
+    box-shadow: 0 0 0 3px rgba($cyan-400, 0.12);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: rgba($red-500, 0.7);
+  }
+}
+
+// Ô đánh dấu kèm chữ (đồng ý quy định...)
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  @include font($fs-sm);
+  color: $gray-300;
+  cursor: pointer;
+
+  input {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+    accent-color: $cyan-400;
+  }
+
+  a {
+    color: $cyan-300;
+    font-weight: 600;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Thanh độ mạnh mật khẩu (chỉ để gợi ý, không bắt buộc)
+.strength {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.375rem;
+
+  &__bar {
+    height: 4px;
+    border-radius: $radius-full;
+    background: rgba(255, 255, 255, 0.08);
+    transition: background-color $ease;
+  }
+
+  &[data-level="1"] &__bar:nth-child(-n + 1) {
+    background: $red-500;
+  }
+  &[data-level="2"] &__bar:nth-child(-n + 2) {
+    background: $orange-400;
+  }
+  &[data-level="3"] &__bar:nth-child(-n + 3) {
+    background: $cyan-400;
+  }
+  &[data-level="4"] &__bar {
+    background: $emerald-400;
+  }
+}

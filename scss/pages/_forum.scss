@@ -1,0 +1,786 @@
+// ======================================================================
+// DIỄN ĐÀN: trang chủ diễn đàn (F34, F53), danh sách topic (F35),
+// tạo topic (F37), trang Quy định diễn đàn
+// Tham khảo bố cục Stitch; bỏ số liệu trang trí, chỉ hiện số đếm thật.
+// ======================================================================
+@use "../abstracts" as *;
+
+// Trang hẹp (form tạo topic, quy định)
+.page__stack--narrow {
+  max-width: 52rem;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+  color: $gray-400;
+  @include font($fs-sm);
+
+  .icon {
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ======================================================================
+// TRANG CHỦ DIỄN ĐÀN
+// ======================================================================
+.forum-hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  @include glass;
+  border-radius: $radius-xl;
+  background: linear-gradient(120deg, rgba($cyan-400, 0.08), rgba($purple-500, 0.08)), rgba(16, 16, 24, 0.65);
+
+  @include up(lg) {
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+
+  &__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-xl;
+    background: rgba($cyan-400, 0.12);
+    border: 1px solid rgba($cyan-400, 0.3);
+    color: $cyan-300;
+    font-size: 2rem;
+  }
+
+  &__title {
+    @include font($fs-2xl);
+    font-weight: 800;
+    color: $white;
+
+    @include up(sm) {
+      @include font($fs-3xl);
+    }
+  }
+
+  &__lead {
+    margin-top: 0.25rem;
+    color: $gray-400;
+    max-width: 40rem;
+  }
+
+  &__stats {
+    display: flex;
+    gap: 1.5rem;
+
+    div {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    dt {
+      @include mono;
+      @include font($fs-xs);
+      color: $gray-500;
+      text-transform: uppercase;
+    }
+
+    dd {
+      @include mono;
+      @include font($fs-xl);
+      font-weight: 700;
+      color: $cyan-300;
+    }
+  }
+
+  &__cta {
+    justify-self: start;
+  }
+}
+
+.forum-layout {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+  }
+}
+
+.forum-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// ---------- Một khối forum ----------
+.forum-card {
+  --forum-color: #{$cyan-400};
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem 1.25rem;
+  padding: 1.25rem;
+  @include glass-subtle;
+  border-radius: $radius-xl;
+  transition: border-color $ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  @include up(md) {
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 18rem);
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  // Màu riêng từng forum
+  &--f100 {
+    --forum-color: #{$yellow-400};
+  }
+  &--f666 {
+    --forum-color: #{$purple-500};
+  }
+  // F368 là forum chính: viền sáng nhẹ
+  &--f368 {
+    border-color: rgba($cyan-400, 0.3);
+    box-shadow: 0 0 30px rgba($cyan-400, 0.08);
+  }
+
+  &__code {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-lg;
+    @include mono;
+    font-weight: 700;
+    color: var(--forum-color);
+    background: color-mix(in srgb, var(--forum-color) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--forum-color) 40%, transparent);
+  }
+
+  &__name {
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+
+    a:hover {
+      color: $cyan-300;
+    }
+
+    .tag {
+      vertical-align: middle;
+    }
+  }
+
+  &__desc {
+    margin-top: 0.25rem;
+    @include font($fs-sm);
+    color: $gray-400;
+  }
+
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-500;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .icon {
+      @include font($fs-base);
+    }
+
+    strong {
+      color: $white;
+    }
+  }
+
+  // Topic mới nhất của forum
+  &__latest {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: $radius-lg;
+    background: rgba(0, 0, 0, 0.3);
+    min-width: 0;
+
+    @include up(md) {
+      grid-column: auto;
+    }
+  }
+
+  &__latest-text {
+    min-width: 0;
+  }
+
+  &__latest-title {
+    display: block;
+    @include font($fs-sm);
+    font-weight: 600;
+    color: $white;
+    @include truncate;
+
+    &:hover {
+      color: $cyan-300;
+    }
+  }
+
+  &__latest-meta {
+    margin-top: 0.25rem;
+    @include font($fs-xs);
+    color: $gray-500;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__empty {
+    @include font($fs-sm);
+    color: $gray-500;
+  }
+}
+
+// ---------- Cột phải ----------
+.forum-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.side-card {
+  padding: 1.25rem;
+  @include glass-subtle;
+  border-radius: $radius-xl;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: $white;
+  }
+
+  &__hint {
+    margin-top: 0.25rem;
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  &__text {
+    margin-top: 0.75rem;
+    @include font($fs-sm);
+    color: $gray-400;
+  }
+
+  &__link {
+    margin-top: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625rem 0.875rem;
+    border-radius: $radius-lg;
+    background: rgba(255, 255, 255, 0.05);
+    @include font($fs-sm);
+    font-weight: 600;
+    color: $white;
+    transition: background-color $ease;
+
+    &:hover {
+      background: rgba($cyan-400, 0.12);
+    }
+
+    .icon {
+      color: $cyan-300;
+    }
+  }
+
+  &__warn {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: $radius-lg;
+    background: rgba($yellow-400, 0.08);
+    border: 1px solid rgba($yellow-400, 0.25);
+    @include font($fs-xs);
+    color: $yellow-200;
+
+    .icon {
+      @include font($fs-lg);
+      color: $yellow-300;
+    }
+  }
+
+  &__empty {
+    margin-top: 0.75rem;
+    @include font($fs-sm);
+    color: $gray-500;
+  }
+}
+
+.top-members {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.top-member {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &__pos {
+    width: 1.25rem;
+    @include mono;
+    @include font($fs-sm);
+    font-weight: 700;
+    color: $gray-500;
+    text-align: center;
+  }
+
+  &:first-child &__pos {
+    color: $yellow-300;
+  }
+
+  &__who {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+
+    .user-link {
+      @include font($fs-sm);
+      max-width: 100%;
+      @include truncate;
+    }
+  }
+
+  &__likes {
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-500;
+    text-align: right;
+
+    strong {
+      display: block;
+      @include font($fs-sm);
+      color: $cyan-300;
+    }
+  }
+}
+
+// ======================================================================
+// DANH SÁCH TOPIC CỦA MỘT FORUM
+// ======================================================================
+.forum-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  @include glass;
+  border-radius: $radius-xl;
+  background: linear-gradient(120deg, rgba($cyan-400, 0.07), transparent 60%), rgba(16, 16, 24, 0.65);
+
+  @include up(md) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 2rem 2.25rem;
+  }
+
+  &__title {
+    margin-top: 0.5rem;
+    @include font($fs-3xl);
+    font-weight: 800;
+    color: $white;
+
+    @include up(sm) {
+      font-size: 2.75rem;
+      line-height: 1.1;
+    }
+  }
+
+  &__code {
+    @include mono;
+    color: $cyan-300;
+  }
+
+  &__slash {
+    color: $gray-600;
+    font-weight: 400;
+  }
+
+  &__desc {
+    margin-top: 0.75rem;
+    color: $gray-400;
+    max-width: 40rem;
+  }
+
+  &__stats {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-500;
+    text-transform: uppercase;
+
+    strong {
+      color: $white;
+    }
+
+    .icon {
+      @include font($fs-base);
+    }
+  }
+
+  &__action {
+    flex-shrink: 0;
+  }
+
+  &__note {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    @include font($fs-sm);
+    color: $yellow-200;
+  }
+}
+
+// ---------- Chip lọc theo tag ----------
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: $radius-full;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid $line-strong;
+  @include font($fs-sm);
+  font-weight: 600;
+  color: $gray-300;
+  transition: all $ease;
+
+  &:hover {
+    color: $white;
+    border-color: rgba($cyan-400, 0.4);
+  }
+
+  &.is-active {
+    background: $cyan-400;
+    border-color: $cyan-400;
+    color: #000;
+
+    .chip__count {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  &__count {
+    @include mono;
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+
+  &__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: $radius-full;
+    background: $gray-400;
+
+    &--cyan { background: $cyan-400; }
+    &--purple { background: $purple-300; }
+    &--yellow { background: $yellow-400; }
+    &--emerald { background: $emerald-400; }
+    &--pink { background: $pink-500; }
+  }
+}
+
+// ---------- Hàng topic ----------
+.topic-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.list-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  @include mono;
+  @include font($fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $gray-400;
+
+  .icon {
+    @include font($fs-base);
+  }
+}
+
+.list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  &__count {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+.topic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.topic-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.875rem;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  @include glass-subtle;
+  border-radius: $radius-lg;
+  transition: border-color $ease, background-color $ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(28, 28, 42, 0.6);
+  }
+
+  @include up(md) {
+    grid-template-columns: auto minmax(0, 1fr) auto 9rem;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+  }
+
+  &--pinned {
+    border-color: rgba($yellow-400, 0.2);
+  }
+
+  &__title {
+    @include font($fs-base);
+    font-weight: 600;
+    color: $white;
+
+    a:hover {
+      color: $cyan-300;
+    }
+
+    .prefix {
+      margin-right: 0.125rem;
+    }
+  }
+
+  &__flag {
+    @include font($fs-lg);
+    margin-right: 0.25rem;
+    vertical-align: -0.2em;
+  }
+
+  &__meta {
+    margin-top: 0.375rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.375rem;
+    @include font($fs-xs);
+    color: $gray-500;
+
+    .user-link {
+      @include font($fs-sm);
+    }
+  }
+
+  // Trên điện thoại: số trả lời / lượt xem nằm ngay trong dòng meta
+  &__inline-stats {
+    @include up(md) {
+      display: none;
+    }
+  }
+
+  &__stats {
+    display: none;
+    gap: 1.25rem;
+    text-align: center;
+
+    @include up(md) {
+      display: flex;
+    }
+
+    div {
+      min-width: 4rem;
+    }
+
+    dd {
+      @include mono;
+      @include font($fs-lg);
+      font-weight: 700;
+      color: $white;
+    }
+
+    dt {
+      @include mono;
+      font-size: 10px;
+      color: $gray-500;
+      text-transform: uppercase;
+    }
+  }
+
+  &__last {
+    display: none;
+    @include font($fs-xs);
+    color: $gray-500;
+    text-align: right;
+    min-width: 0;
+
+    @include up(md) {
+      display: block;
+    }
+
+    .user-link {
+      @include font($fs-sm);
+    }
+  }
+}
+
+// ======================================================================
+// TẠO TOPIC
+// ======================================================================
+.new-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+}
+
+.field__select {
+  padding: 0.75rem 0.875rem;
+  @include font($fs-base);
+  border-radius: $radius-lg;
+}
+
+.prefix-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.prefix-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: $radius-lg;
+  border: 1px solid $line-strong;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: border-color $ease;
+
+  &:has(input:checked) {
+    border-color: rgba($cyan-400, 0.7);
+    background: rgba($cyan-400, 0.08);
+  }
+
+  &.is-locked {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  &__note {
+    @include font($fs-xs);
+    color: $gray-500;
+  }
+}
+
+// ======================================================================
+// QUY ĐỊNH DIỄN ĐÀN
+// ======================================================================
+.rules {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    counter-reset: rule;
+
+    li {
+      counter-increment: rule;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid $line;
+      color: $gray-300;
+
+      &:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+    }
+
+    p {
+      margin-top: 0.5rem;
+      @include font($fs-sm);
+      line-height: 1.6;
+    }
+
+    strong {
+      color: $white;
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    @include font($fs-lg);
+    font-weight: 700;
+    color: $white;
+
+    &::before {
+      content: counter(rule) ".";
+      @include mono;
+      color: $gray-500;
+    }
+  }
+}

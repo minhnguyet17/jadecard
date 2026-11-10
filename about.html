@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Giới thiệu & Chính sách thu mua — JadeCard</title>
+  <meta name="description" content="Giới thiệu cửa hàng JadeCard và chính sách thu mua thẻ Pokémon tại cửa hàng.">
+  <!-- Font chữ (có hỗ trợ tiếng Việt) và bộ icon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+  <!-- CSS của dự án: viết bằng SCSS trong thư mục scss/, biên dịch ra css/style.css (npm run build:css) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER (dùng chung mọi trang) ===================== -->
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a href="index.html" class="logo">
+        <span class="logo__mark"><span class="logo__mark-inner">J</span></span>
+        <span class="logo__text">
+          <span class="logo__name">JADECARD</span>
+          <span class="logo__tagline">POKÉMON TCG SHOP</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Menu chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="consign.html">Ký gửi</a>
+        <a href="forum.html">Diễn đàn</a>
+        <a href="check-card.html">Check thẻ</a>
+      </nav>
+
+      <!-- Ô tìm kiếm: gửi từ khóa sang trang Sản phẩm (?q=...) -->
+      <form action="products.html" method="get" class="header-search" role="search">
+        <span class="icon" aria-hidden="true">search</span>
+        <label for="header-search" class="sr-only">Tìm sản phẩm</label>
+        <input id="header-search" name="q" type="search" placeholder="Tìm tên thẻ hoặc số thẻ (025/165)">
+      </form>
+
+      <!-- Giỏ hàng: số trên biểu tượng do js/cart.js cập nhật -->
+      <a href="cart.html" class="cart-link">
+        <span class="icon" aria-hidden="true">shopping_bag</span>
+        <span class="sr-only">Giỏ hàng, số sản phẩm:</span>
+        <span id="cart-count" class="cart-link__count hidden">0</span>
+      </a>
+
+      <!-- Tài khoản: js/account-menu.js đổi thành avatar + tag chức vụ khi đã đăng nhập -->
+      <div id="account-menu" class="account-menu">
+        <a href="login.html" class="account-menu__login">
+          <span class="icon" aria-hidden="true">account_circle</span>
+          <span class="account-menu__login-text">Đăng nhập</span>
+        </a>
+      </div>
+    </div>
+    <!-- Menu trên điện thoại: một hàng cuộn ngang -->
+    <nav class="mobile-nav no-scrollbar" aria-label="Menu chính (điện thoại)">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html">Sản phẩm</a>
+      <a href="consign.html">Ký gửi</a>
+      <a href="forum.html">Diễn đàn</a>
+      <a href="check-card.html">Check thẻ</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Giới thiệu -->
+    <section class="about-hero">
+      <div class="about-hero__blob" aria-hidden="true"></div>
+      <div class="about-hero__inner">
+        <div class="about-hero__copy">
+          <nav class="breadcrumb" aria-label="Đường dẫn"><a href="index.html">Trang chủ</a> / <span class="breadcrumb__current">Giới thiệu</span></nav>
+          <h1 class="about-hero__title">Về <span class="holo-text">JadeCard</span></h1>
+          <p class="about-hero__lead">JadeCard là cửa hàng chuyên thẻ bài <strong>Pokémon TCG</strong>: bán hàng nguyên hộp (booster pack, booster box, Elite Trainer Box, hộp thiếc) và <strong>thẻ lẻ</strong> có ghi rõ set, số thẻ, độ hiếm và tình trạng.</p>
+          <p class="about-hero__text">Tên "Jade" đọc gần giống "trade" (trao đổi). JadeCard muốn trở thành nơi người chơi vừa mua được đúng lá thẻ mình cần, vừa bán lại thẻ hiếm một cách minh bạch, không phải rao trên nhóm Facebook.</p>
+        </div>
+        <div class="card-fan" aria-hidden="true">
+          <img src="images/cards/sv03.5-173.webp" alt="">
+          <img src="images/cards/sv03.5-199.webp" alt="">
+          <img src="images/cards/sv08-238.webp" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!-- Khách hàng và điểm nổi bật -->
+    <section class="section section--compact">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="icon icon--3xl text-cyan" aria-hidden="true">groups</span>
+          <h2>Chúng tôi phục vụ ai?</h2>
+          <p>Người sưu tầm và người chơi Pokémon TCG từ 16 đến 35 tuổi, đặc biệt là học sinh, sinh viên và người đi làm trẻ. Cả phụ huynh đang tìm một món quà chính hãng.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon icon--3xl text-purple" aria-hidden="true">photo_camera</span>
+          <h2>Check thẻ ra giá VND</h2>
+          <p>Chụp ảnh thẻ để biết giá tham khảo quốc tế đã quy đổi ra tiền Việt, thay vì tự tra từng lá trên các trang nước ngoài.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon icon--3xl text-yellow" aria-hidden="true">storefront</span>
+          <h2>Thu mua tại cửa hàng</h2>
+          <p>Thẻ được kiểm định tận tay trước mặt bạn, giá tính theo công thức công khai, đồng ý thì nhận tiền ngay tại quầy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chính sách thu mua -->
+    <section id="thu-mua" class="section section--compact">
+      <div class="stack">
+        <div class="policy-head">
+          <p class="eyebrow eyebrow--yellow">CHÍNH SÁCH THU MUA</p>
+          <h2 class="section-title">Bán thẻ cho JadeCard</h2>
+          <p class="policy-head__text">Mọi giao dịch thu mua diễn ra <strong>trực tiếp tại cửa hàng</strong>. JadeCard không nhận thẻ gửi qua bưu điện và không thu thông tin tài khoản ngân hàng của bạn trên website.</p>
+        </div>
+
+        <div class="policy-grid">
+          <div class="policy-card">
+            <h3>Công thức giá thu mua dự kiến</h3>
+            <p class="formula">Giá thu mua = Giá tham khảo VND × 60% × Hệ số tình trạng</p>
+            <table class="factor-table">
+              <caption class="sr-only">Hệ số theo tình trạng thẻ</caption>
+              <thead><tr><th>Tình trạng</th><th>Mô tả</th><th class="num">Hệ số</th></tr></thead>
+              <tbody>
+                <tr><td class="text-emerald">NM</td><td>Gần như mới</td><td class="num">100%</td></tr>
+                <tr><td class="text-cyan">LP</td><td>Trầy nhẹ</td><td class="num">85%</td></tr>
+                <tr><td class="text-yellow">MP</td><td>Trầy vừa</td><td class="num">70%</td></tr>
+                <tr><td class="text-orange">HP</td><td>Trầy nhiều</td><td class="num">50%</td></tr>
+                <tr><td class="text-red">DMG</td><td>Hư hỏng</td><td class="num num--text">Không thu</td></tr>
+              </tbody>
+            </table>
+            <p class="policy-card__note">Chỉ thu thẻ có giá tham khảo từ 100.000 ₫. Đạt ngưỡng không có nghĩa shop chắc chắn mua: shop có thể từ chối khi đã đủ hàng. Ví dụ: thẻ giá 520.000 ₫, tình trạng LP → 520.000 × 60% × 85% = 265.200 ₫. Các hệ số là giá trị mô phỏng của đồ án.</p>
+          </div>
+
+          <div class="policy-card">
+            <h3>Quy trình 4 bước</h3>
+            <ol class="process">
+              <li><span class="process__no">01</span><div><p class="process__title">Gửi yêu cầu online</p><p class="process__text">Mỗi yêu cầu một thẻ, kèm ảnh mặt trước và mặt sau, tình trạng tự đánh giá và số điện thoại.</p></div></li>
+              <li><span class="process__no">02</span><div><p class="process__title">Shop kiểm tra trước</p><p class="process__text">Shop xem ảnh để kiểm tra sơ bộ, rồi duyệt hoặc báo lý do từ chối để bạn khỏi mất công đi.</p></div></li>
+              <li><span class="process__no">03</span><div><p class="process__title">Mang thẻ đến trong 7 ngày</p><p class="process__text">Đọc mã yêu cầu. Shop kiểm định thật/giả và tình trạng ngay trước mặt bạn.</p></div></li>
+              <li><span class="process__no">04</span><div><p class="process__title">Chốt giá, nhận tiền tại quầy</p><p class="process__text">Đúng tình trạng thì mua đúng giá dự kiến. Thấp hơn thì báo giá mới; không đồng ý, bạn mang thẻ về.</p></div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Liên hệ -->
+    <section class="section section--compact">
+      <div class="contact glass holo-border">
+        <div>
+          <h2>Ghé cửa hàng</h2>
+          <p class="contact__note">Thông tin liên hệ là dữ liệu mẫu của đồ án.</p>
+        </div>
+        <ul>
+          <li><span class="icon" aria-hidden="true">location_on</span> 123 Đường Mẫu, Quận 1, TP.HCM</li>
+          <li><span class="icon" aria-hidden="true">schedule</span> 10:00 – 21:00, thứ 2 – Chủ nhật</li>
+        </ul>
+        <ul>
+          <li><span class="icon" aria-hidden="true">mail</span> hello@jadecard.vn</li>
+          <li><span class="icon" aria-hidden="true">call</span> 0900 000 000</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER (dùng chung mọi trang) ===================== -->
+  <footer class="site-footer">
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__brand">JADECARD</p>
+        <p>Cửa hàng thẻ bài Pokémon TCG: hàng nguyên hộp, thẻ lẻ và thu mua thẻ.</p>
+      </div>
+      <nav aria-label="Liên kết cuối trang">
+        <p class="site-footer__title">Trang</p>
+        <ul>
+          <li><a href="products.html">Sản phẩm</a></li>
+          <li><a href="consign.html">Ký gửi</a></li>
+          <li><a href="collection.html">Bộ sưu tập</a></li>
+          <li><a href="forum.html">Diễn đàn</a></li>
+          <li><a href="check-card.html">Check thẻ</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="about.html#thu-mua">Chính sách thu mua</a></li>
+          <li><a href="forum-rules.html">Quy định diễn đàn</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="site-footer__title">Liên hệ <span>(dữ liệu mẫu)</span></p>
+        <ul>
+          <li>Địa chỉ: 123 Đường Mẫu, Quận 1, TP.HCM</li>
+          <li>Giờ mở cửa: 10:00 – 21:00, thứ 2 – Chủ nhật</li>
+          <li>Email: hello@jadecard.vn</li>
+        </ul>
+      </div>
+      <div class="site-footer__legal">
+        Đồ án học tập, học phần Phát triển ứng dụng WEB/TMĐT (UEH). Không liên kết với The Pokémon Company. Ảnh và dữ liệu thẻ: TCGdex. Giá chỉ mang tính tham khảo.
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript: chỉ cần cập nhật số trên biểu tượng giỏ hàng -->
+  <script src="js/data/products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/community-ui.js"></script>
+  <script src="js/account-menu.js"></script>
+</body>
+</html>
